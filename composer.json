@@ -4,6 +4,12 @@
         "cakephp/cakephp": "2.10.*"
     },
     "config": {
-        "vendor-dir": "Vendor/"
+        "vendor-dir": "Vendor/",
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    },
+    "require-dev": {
+        "cakephp/debug_kit": "^2.2.0"
     }
 }
