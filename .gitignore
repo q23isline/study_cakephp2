@@ -32,3 +32,11 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# ログファイル
+!/logs/db/
+/logs/db/*
+!/logs/db/.gitkeep
+!/logs/web/
+/logs/web/*
+!/logs/web/.gitkeep
