@@ -20,13 +20,17 @@ RUN php composer.phar install
 # アプリ用イメージ
 FROM php:7.1-fpm-buster
 
-# # CakePHP が依存している拡張機能
+# CakePHP が依存している拡張機能
 RUN apt update
 RUN apt -y install libzip-dev
 RUN docker-php-ext-install zip
 
-# # MySQL へ DB 保存する拡張機能
+# MySQL へ DB 保存する拡張機能
 RUN docker-php-ext-install pdo_mysql
+
+# デバッグ実行に必要な拡張機能
+RUN pecl install xdebug-2.9.8
+RUN docker-php-ext-enable xdebug
 
 WORKDIR /var/www/html
 

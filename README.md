@@ -40,7 +40,7 @@
     docker create -it --name app study_cakephp2-app bash
     sudo docker cp app:/var/www/html/Vendor $(pwd)
     docker rm -f app
-    sudo chown -R $(whoami):$(whoami) Vendor
+    sudo chown -R 777 Vendor
     docker compose up -d
     ```
 
@@ -85,4 +85,32 @@ docker exec -it app ./Vendor/bin/phpcs -p Console/ Controller/ Model/ View/
 
 ```bash
 docker exec -it app ./Vendor/bin/phpstan analyse
+```
+
+## デバッグ実行
+
+### VS Codeの初期設定
+
+- [VS Code | Marketplace | PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug)をインストールする
+- VS CodeにXDebug用の構成ファイル（launch.json）を追加する
+
+```JSONC
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch",
+            "hostname": "0.0.0.0",
+            "pathMappings": {
+                "/var/www/html/": "${workspaceRoot}"
+            },
+            "environment": {
+                // デバッグ時はログレベルを 7
+                "XDEBUG_CONFIG": "log_level=7"
+            }
+        }
+    ]
+}
 ```

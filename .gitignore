@@ -21,6 +21,8 @@
 #################################
 /nbproject
 .idea
+# Visual Studio Code
+.vscode
 
 # OS generated files #
 ######################
