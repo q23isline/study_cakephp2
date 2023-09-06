@@ -13,6 +13,14 @@
  * @since         CakePHP(tm) v 0.10.8.2117
  */
 
+ // Composer の autoload を読み込み
+require APP . DS . 'Vendor/autoload.php';
+
+// CakePHP のオートローダーをいったん削除し、Composer より先に評価されるように先頭に追加する
+// http://goo.gl/kKVJO7 を参照
+spl_autoload_unregister(array('App', 'load'));
+spl_autoload_register(array('App', 'load'), true, true);
+
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 

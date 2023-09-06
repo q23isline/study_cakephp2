@@ -1,0 +1,13 @@
+parameters:
+    level: 8
+    bootstrapFiles:
+        - Config/bootstrap_test.php
+        - Config/bootstrap.php
+    scanDirectories:
+        # どうしても CakePHP 本体のクラスが読み込めないので scan 対象に指定（ bootstrap.php で読み込みたい）
+        - Vendor/cakephp/cakephp/lib/Cake
+    paths:
+        - Console/
+        - Controller/
+        - Model/
+        - View/
