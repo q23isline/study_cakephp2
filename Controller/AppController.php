@@ -26,6 +26,7 @@ class AppController extends Controller {
 	/** @var mixed[] $components */
 	public $components = array(
 		'DebugKit.Toolbar',
+		'Flash',
 		'Auth' => array(
 			'loginRedirect' => array(
 				'controller' => 'users',
