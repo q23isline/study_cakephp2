@@ -11,3 +11,6 @@ parameters:
         - Controller/
         - Model/
         - View/
+    excludePaths:
+        - Console/cake.php
+        - Controller/PagesController.php
