@@ -9,7 +9,7 @@ class User extends AppModel {
 /**
  * Validation rules
  *
- * @var array
+ * @var array<string,mixed>
  */
 	public $validate = array(
 		'username' => array(

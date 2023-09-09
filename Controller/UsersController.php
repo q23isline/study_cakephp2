@@ -11,7 +11,7 @@ class UsersController extends AppController {
 /**
  * Components
  *
- * @var array
+ * @var string[]
  */
 	public $components = array('Paginator');
 
@@ -43,7 +43,7 @@ class UsersController extends AppController {
 /**
  * add method
  *
- * @return void
+ * @return CakeResponse|null|void
  */
 	public function add() {
 		if ($this->request->is('post')) {
@@ -61,7 +61,7 @@ class UsersController extends AppController {
  * edit method
  *
  * @param string $id id
- * @return void
+ * @return CakeResponse|null|void
  * @throws NotFoundException
  */
 	public function edit($id = null) {
@@ -77,7 +77,10 @@ class UsersController extends AppController {
 			}
 		} else {
 			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-			$this->request->data = $this->User->find('first', $options);
+			$user = $this->User->find('first', $options);
+			if (is_array($user)) {
+				$this->request->data = $user;
+			}
 		}
 	}
 
@@ -85,7 +88,7 @@ class UsersController extends AppController {
  * delete method
  *
  * @param string $id id
- * @return void
+ * @return CakeResponse|null|void
  * @throws NotFoundException
  */
 	public function delete($id = null) {
