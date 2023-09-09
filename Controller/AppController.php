@@ -23,6 +23,23 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-	/** @var string[] $components */
-	public $components = array('DebugKit.Toolbar');
+	/** @var mixed[] $components */
+	public $components = array(
+		'DebugKit.Toolbar',
+		'Auth' => array(
+			'loginRedirect' => array(
+				'controller' => 'users',
+				'action' => 'index',
+			),
+			'logoutRedirect' => array(
+				'controller' => 'users',
+				'action' => 'login',
+			),
+			'authenticate' => array(
+				'Form' => array(
+					'passwordHasher' => 'Blowfish',
+				),
+			),
+		),
+	);
 }

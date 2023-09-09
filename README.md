@@ -65,6 +65,12 @@ docker compose down
 
 - <http://localhost>
 
+### ログイン情報
+
+| Username  | Password |
+| --------- | -------- |
+| admin     | admin00  |
+
 ### Permission Denied対策
 
 - ログイン後、画面にPermission Deniedエラーが表示される場合、以下を実行
