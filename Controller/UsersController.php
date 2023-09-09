@@ -28,9 +28,9 @@ class UsersController extends AppController {
 /**
  * view method
  *
- * @throws NotFoundException
- * @param string $id
+ * @param string $id id
  * @return void
+ * @throws NotFoundException
  */
 	public function view($id = null) {
 		if (!$this->User->exists($id)) {
@@ -60,9 +60,9 @@ class UsersController extends AppController {
 /**
  * edit method
  *
- * @throws NotFoundException
- * @param string $id
+ * @param string $id id
  * @return void
+ * @throws NotFoundException
  */
 	public function edit($id = null) {
 		if (!$this->User->exists($id)) {
@@ -84,9 +84,9 @@ class UsersController extends AppController {
 /**
  * delete method
  *
- * @throws NotFoundException
- * @param string $id
+ * @param string $id id
  * @return void
+ * @throws NotFoundException
  */
 	public function delete($id = null) {
 		if (!$this->User->exists($id)) {
