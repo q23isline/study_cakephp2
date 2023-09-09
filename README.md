@@ -1,6 +1,7 @@
 # study_cakephp2
 
 [![LICENSE](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+[![GitHub Actions](https://github.com/q23isline/study_cakephp2/actions/workflows/ci.yml/badge.svg)](https://github.com/q23isline/study_cakephp2/actions/workflows/ci.yml)
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%208-brightgreen.svg)](https://github.com/phpstan/phpstan)
 [![Open in Visual Studio Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=555555&color=007acc&logoColor=007acc)](https://open.vscode.dev/q23isline/study_cakephp2)
 
