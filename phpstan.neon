@@ -14,3 +14,7 @@ parameters:
     excludePaths:
         - Console/cake.php
         - Controller/PagesController.php
+    ignoreErrors:
+        # FlashComponent でマジックメソッドとして呼び出せるため、無視する
+        - '#Call to an undefined method FlashComponent::success\(\).#'
+        - '#Call to an undefined method FlashComponent::error\(\).#'
