@@ -78,7 +78,7 @@ sudo chmod -R ugo+rw logs
 
 ```bash
 # コーディング標準チェック実行
-docker exec -it app ./Vendor/bin/phpcs -p Console/ Controller/ Model/ View/
+docker exec -it app ./Vendor/bin/phpcs --standard=CakePHP -p Console/Command/ Console/Templates/ Controller/ Model/ View/
 ```
 
 ## 静的分析チェック単体実行

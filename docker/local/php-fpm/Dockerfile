@@ -37,3 +37,6 @@ WORKDIR /var/www/html
 COPY ./docker/local/php-fpm/php.ini /usr/local/etc/php/php.ini
 COPY . /var/www/html
 COPY --from=composer /app/Vendor /var/www/html/Vendor
+
+# PHPCodeSniffer に CakePHP をセットする
+RUN Vendor/bin/phpcs --config-set installed_paths Vendor/cakephp/cakephp-codesniffer
