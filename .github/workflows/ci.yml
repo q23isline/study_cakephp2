@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '4.x'
+      - '4.next'
+      - '5.x'
+  pull_request:
+    branches:
+      - '*'
+
+permissions:
+  contents: read
+
+jobs:
+  coding-standard:
+    name: Coding Standard
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.1'
+        extensions: mbstring, intl
+        coverage: none
+
+    - name: Composer install
+      run: composer install
+
+    - name: Set CakePHP CodeSniffer
+      run: Vendor/bin/phpcs --config-set installed_paths Vendor/cakephp/cakephp-codesniffer
+
+    - name: Run PHP CodeSniffer
+      run: Vendor/bin/phpcs --standard=CakePHP -p Console/Command/ Console/Templates/ Controller/ Model/ View/
+
+  static-analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.1'
+        extensions: mbstring, intl
+        coverage: none
+
+    - name: Composer install
+      run: composer install
+
+    - name: Setup Application
+      run: |
+        cp Config/core.php.default Config/core.php
+        cp Config/database.php.default Config/database.php
+        cp Config/email.php.default Config/email.php
+
+    - name: Run phpstan
+      run: Vendor/bin/phpstan analyse
