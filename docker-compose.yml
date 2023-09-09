@@ -54,6 +54,7 @@ services:
       - TZ=Asia/Tokyo
     volumes:
       - ./logs/db:/var/log/mysql
+      - ./docker/local/mysql/init:/docker-entrypoint-initdb.d
       - ./docker/local/mysql/etc-mysql.cnf:/etc/mysql/conf.d/etc-mysql.cnf
       - db-data:/var/lib/mysql
     networks:
