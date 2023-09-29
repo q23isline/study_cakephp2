@@ -21,6 +21,7 @@
 2. 以下の`.default`をコピーして貼り付け、`.default`の拡張子を外す
 
     ```bash
+    cd study_cakephp2
     cp Config/core.php.default Config/core.php
     cp Config/database.php.default Config/database.php
     cp Config/email.php.default Config/email.php
