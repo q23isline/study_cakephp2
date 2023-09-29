@@ -44,10 +44,13 @@
     docker compose build --no-cache
     docker compose down -v
     sudo rm -rf Vendor
+    sudo rm -rf Plugin
     docker create -it --name app study_cakephp2-app bash
     sudo docker cp app:/var/www/html/Vendor $(pwd)
+    sudo docker cp app:/var/www/html/Plugin $(pwd)
     docker rm -f app
     sudo chmod -R 777 Vendor
+    sudo chmod -R 777 Plugin
     docker compose up -d
     ```
 
