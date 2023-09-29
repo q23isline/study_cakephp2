@@ -41,7 +41,7 @@
     docker create -it --name app study_cakephp2-app bash
     sudo docker cp app:/var/www/html/Vendor $(pwd)
     docker rm -f app
-    sudo chown -R 777 Vendor
+    sudo chmod -R 777 Vendor
     docker compose up -d
     ```
 
