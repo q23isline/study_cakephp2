@@ -32,7 +32,13 @@
     sudo chmod -R ugo+rw logs
     ```
 
-4. アプリ立ち上げ
+4. APP コンテナ起動時に Permission Denied で tmp フォルダが作れずにエラーとならないよう権限付与する
+
+    ```bash
+    sudo chmod -R ugo+w ../study_cakephp2
+    ```
+
+5. アプリ立ち上げ
 
     ```bash
     docker compose build --no-cache
