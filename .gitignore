@@ -4,9 +4,11 @@
 /Config/email.php
 /Config/core.php
 /Plugin/*
+!/Plugin/.gitkeep
 /Vendor/*
 /tmp/*
 /webroot/files/*
+!/webroot/files/.gitkeep
 
 # User specific & automatically generated files #
 #################################################
