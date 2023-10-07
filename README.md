@@ -52,8 +52,15 @@
     docker rm -f app
     sudo chmod -R 777 Vendor
     sudo chmod -R 777 Plugin
+    sudo rm -rf frontend/node_modules
+    docker create -it --name front study_cakephp2-front bash
+    sudo docker cp front:/front/node_modules $(pwd)/frontend
+    docker rm -f front
+    sudo chmod -R 777 frontend/node_modules
     docker compose up -d
     ```
+
+TODO: ビルド手順を ↑ にも追加する
 
 ## 日常的にやること
 
@@ -67,6 +74,12 @@ docker compose up -d
 
 ```bash
 docker compose down
+```
+
+### フロントエンドのビルド
+
+```bash
+# TODO: 手順化する
 ```
 
 ## 動作確認
@@ -90,6 +103,11 @@ docker compose down
 sudo chmod -R 777 tmp
 sudo chmod -R ugo+rw logs
 ```
+
+## フロントエンド開発
+
+- 以下の URL にアクセスすることで Vue の内容を確認できる
+- <http://localhost:8080>
 
 ## コーディング標準チェック単体実行
 

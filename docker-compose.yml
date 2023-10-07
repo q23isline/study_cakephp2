@@ -6,6 +6,7 @@ networks:
 
 volumes:
   vendor:
+  node:
   db-data:
 
 services:
@@ -35,6 +36,21 @@ services:
       - backend
     depends_on:
       - db
+  front:
+    build:
+      context: .
+      dockerfile: ./docker/local/node/Dockerfile
+    container_name: front
+    ports:
+      - 8080:8080
+    volumes:
+      - ./frontend:/front
+      - node:/front/node_modules
+    networks:
+      - backend
+    depends_on:
+      - db
+    command: npm run serve
   db:
     image: mysql:8.0
     container_name: db
