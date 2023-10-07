@@ -3,12 +3,13 @@
  * @link https://cli.vuejs.org/config/
  */
 module.exports = {
-    pages: {
-        index: {
-            entry: 'src/main.ts'
-        }
+  pages: {
+    index: {
+      entry: "src/main.ts",
     },
-    outputDir: '../webroot',
-    // ビルド後にできるファイル名にハッシュ値つけない（バックエンドで固定値で呼びだせるようにする）
-    filenameHashing: false
-}
+  },
+  // webroot は NGINX や Node.js コンテナでマウントしているのでディレクトリを消さないようにビルド時に --no-clean オプションをつける
+  outputDir: "../webroot",
+  // ビルド後にできるファイル名にハッシュ値つけない（バックエンドで固定値で呼びだせるようにする）
+  filenameHashing: false,
+};

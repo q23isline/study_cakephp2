@@ -61,9 +61,9 @@
     docker rm -f front
     sudo chmod -R 777 frontend/node_modules
     docker compose up -d
+    sudo rm -rf webroot/*
+    docker compose exec front npm run build
     ```
-
-TODO: ビルド手順を ↑ にも追加する
 
 ## 日常的にやること
 
@@ -82,7 +82,8 @@ docker compose down
 ### フロントエンドのビルド
 
 ```bash
-# TODO: 手順化する
+sudo rm -rf webroot/*
+docker compose exec front npm run build
 ```
 
 ## 動作確認
@@ -120,7 +121,6 @@ docker compose exec front npm run serve
 ## コーディング標準チェック単体実行
 
 ```bash
-# コーディング標準チェック実行
 docker exec -it app ./Vendor/bin/phpcs --standard=CakePHP -p Console/Command/ Console/Templates/ Controller/ Model/ View/
 ```
 
@@ -128,6 +128,12 @@ docker exec -it app ./Vendor/bin/phpcs --standard=CakePHP -p Console/Command/ Co
 
 ```bash
 docker exec -it app ./Vendor/bin/phpstan analyse
+```
+
+## フロントエンド静的解析単体実行
+
+```bash
+docker compose exec front npm run lint
 ```
 
 ## デバッグ実行
