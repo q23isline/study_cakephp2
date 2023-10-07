@@ -5,6 +5,6 @@
 ?>
 <div id="app">
 </div>
-<?= $this->Html->script('/assets/js/about.js') ?>
-<?= $this->Html->script('/assets/js/chunk-vendors.js') ?>
-<?= $this->Html->script('/assets/js/index.js') ?>
+<?= $this->Html->script('/js/about.js') ?>
+<?= $this->Html->script('/js/chunk-vendors.js') ?>
+<?= $this->Html->script('/js/index.js') ?>

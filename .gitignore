@@ -47,4 +47,5 @@ Thumbs.db
 
 # node
 /frontend/node_modules/*
-/webroot/assets/*
+/webroot/*
+!/webroot/.gitkeep
