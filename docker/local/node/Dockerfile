@@ -1,10 +1,12 @@
 FROM node:10-buster
 
 RUN mkdir /front
-WORKDIR /front
+RUN mkdir /front/vue
+RUN mkdir /front/webroot
+WORKDIR /front/vue
 
-COPY frontend/package.json /front/package.json
-COPY frontend/package-lock.json /front/package-lock.json
+COPY frontend/package.json /front/vue/package.json
+COPY frontend/package-lock.json /front/vue/package-lock.json
 
 RUN npm install
 
