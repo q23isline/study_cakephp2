@@ -68,4 +68,12 @@ class PagesController extends AppController {
 			throw new NotFoundException();
 		}
 	}
+
+/**
+ * index
+ *
+ * @return void
+ */
+	public function index() : void {
+	}
 }

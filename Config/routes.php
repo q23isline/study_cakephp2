@@ -17,10 +17,20 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	Router::connect('/', array('controller' => 'users', 'action' => 'index'));
+	Router::connect('/users', array('controller' => 'users', 'action' => 'index'));
+	Router::connect('/users/login', array('controller' => 'users', 'action' => 'login'));
+	Router::connect('/users/logout', array('controller' => 'users', 'action' => 'logout'));
+	Router::connect('/users/add', array('controller' => 'users', 'action' => 'add'));
+	Router::connect('/users/view/:id', array('controller' => 'users', 'action' => 'view'), array('pass' => array('id'), 'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'));
+	Router::connect('/users/edit/:id', array('controller' => 'users', 'action' => 'edit'), array('pass' => array('id'), 'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'));
+	Router::connect('/users/delete/:id', array('controller' => 'users', 'action' => 'delete'), array('pass' => array('id'), 'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+
+	// vue を呼び出すルーティング
+	Router::connect('/*', array('controller' => 'pages', 'action' => 'index'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on

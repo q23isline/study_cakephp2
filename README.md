@@ -9,6 +9,9 @@
 [![CakePHP](https://img.shields.io/static/v1?logo=cakephp&label=CakePHP&message=v2.10.24&labelColor=555555&color=D33C43&logoColor=D33C43)](https://cakephp.org)
 [![MySQL](https://img.shields.io/static/v1?logo=mysql&label=MySQL&message=v8.0&labelColor=555555&color=4479A1&logoColor=4479A1)](https://dev.mysql.com)
 [![NGINX](https://img.shields.io/static/v1?logo=nginx&label=NGINX&message=v1.21&labelColor=555555&color=009639&logoColor=009639)](https://www.nginx.com)
+[![Node.js](https://img.shields.io/static/v1?logo=node.js&label=Node.js&message=v10.24.1&labelColor=555555&color=339933&logoColor=339933)](https://nodejs.org)
+[![npm](https://img.shields.io/static/v1?logo=npm&label=npm&message=v6.14.12&labelColor=555555&color=CB3837&logoColor=CB3837)](https://www.npmjs.com/)
+[![Vue.js](https://img.shields.io/static/v1?logo=vue.js&label=Vue.js&message=v2.7.14&labelColor=555555&color=4FC08D&logoColor=4FC08D)](https://v2.ja.vuejs.org/)
 
 ## はじめにやること
 
@@ -52,7 +55,14 @@
     docker rm -f app
     sudo chmod -R 777 Vendor
     sudo chmod -R 777 Plugin
+    sudo rm -rf frontend/node_modules
+    docker create -it --name front study_cakephp2-front bash
+    sudo docker cp front:/front/vue/node_modules $(pwd)/frontend
+    docker rm -f front
+    sudo chmod -R 777 frontend/node_modules
     docker compose up -d
+    sudo rm -rf webroot/*
+    docker compose exec front npm run build
     ```
 
 ## 日常的にやること
@@ -67,6 +77,13 @@ docker compose up -d
 
 ```bash
 docker compose down
+```
+
+### フロントエンドのビルド
+
+```bash
+sudo rm -rf webroot/*
+docker compose exec front npm run build
 ```
 
 ## 動作確認
@@ -91,10 +108,19 @@ sudo chmod -R 777 tmp
 sudo chmod -R ugo+rw logs
 ```
 
+## フロントエンド開発
+
+```bash
+docker compose exec front npm run serve
+```
+
+- 以下の URL にアクセスすることで Vue の内容を確認できる
+  - <http://localhost:8080>
+- 終了するときはターミナルで Ctrl + c
+
 ## コーディング標準チェック単体実行
 
 ```bash
-# コーディング標準チェック実行
 docker exec -it app ./Vendor/bin/phpcs --standard=CakePHP -p Console/Command/ Console/Templates/ Controller/ Model/ View/
 ```
 
@@ -102,6 +128,12 @@ docker exec -it app ./Vendor/bin/phpcs --standard=CakePHP -p Console/Command/ Co
 
 ```bash
 docker exec -it app ./Vendor/bin/phpstan analyse
+```
+
+## フロントエンド静的解析単体実行
+
+```bash
+docker compose exec front npm run lint
 ```
 
 ## デバッグ実行

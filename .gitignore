@@ -41,6 +41,14 @@ Thumbs.db
 !/logs/db/
 /logs/db/*
 !/logs/db/.gitkeep
+!/logs/front/
+/logs/front/*
+!/logs/front/.gitkeep
 !/logs/web/
 /logs/web/*
 !/logs/web/.gitkeep
+
+# node
+/frontend/node_modules/*
+/webroot/*
+!/webroot/.gitkeep

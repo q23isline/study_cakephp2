@@ -24,6 +24,11 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+	<link href="/css/index.css" rel="preload" as="style">
+	<link href="/js/about.js" rel="preload" as="script">
+	<link href="/js/chunk-vendors.js" rel="preload" as="script">
+	<link href="/js/index.js" rel="preload" as="script">
+	<link href="/css/index.css" rel="stylesheet">
 </head>
 <body>
 	<div id="container">
