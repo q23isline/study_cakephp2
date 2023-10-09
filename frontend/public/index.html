@@ -5,13 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/css/cake.generic.css">
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <div id="container">
+      <div>
+      <div id="header">
+        <h1>
+          <a href="https://cakephp.org">CakePHP: the rapid development php framework</a>
+        </h1>
+      </div>
+      <div id="content">
+        <div id="app"></div>
+        <!-- built files will be auto injected -->
+      </div>
+      <div id="footer">
+        <a href="https://cakephp.org/" target="_blank">
+          <img src="/img/cake.power.gif" alt="CakePHP: the rapid development php framework" border="0" />
+        </a>
+      </div>
+    </div>
   </body>
 </html>
