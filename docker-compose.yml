@@ -51,8 +51,6 @@ services:
       - node:/front/vue/node_modules
     networks:
       - backend
-    depends_on:
-      - db
     stdin_open: true
     tty: true
   db:
