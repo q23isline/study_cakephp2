@@ -8,6 +8,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service --no-clean build",
     "lint": "vue-cli-service lint",
+    "lint-notice": "vue-cli-service lint --no-fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "main": "index.js",

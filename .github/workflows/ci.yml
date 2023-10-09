@@ -62,3 +62,24 @@ jobs:
 
     - name: Run phpstan
       run: Vendor/bin/phpstan analyse
+
+  front-static-analysis:
+    name: Front Static Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js 10.24
+      uses: actions/setup-node@v3
+      with:
+        node-version: 10.24
+        cache: 'npm'
+
+    - name: npm install
+      run: |
+        cd frontend
+        npm install
+
+    - name: Run Lint
+      run: npm run lint-notice
