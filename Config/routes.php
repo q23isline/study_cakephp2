@@ -11,6 +11,9 @@
  * @since         CakePHP(tm) v 0.2.9
  */
 
+	// API
+	Router::connect('/api/v1/users', array('controller' => 'ApiV1UsersGetList', 'action' => 'invoke', '[method]' => 'GET'));
+
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
