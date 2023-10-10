@@ -11,6 +11,13 @@
  * @since         CakePHP(tm) v 0.2.9
  */
 
+	// API
+	Router::connect('/api/v1/users', array('controller' => 'ApiV1UsersGetList', 'action' => 'invoke', '[method]' => 'GET'));
+	Router::connect('/api/v1/users', array('controller' => 'ApiV1UsersAdd', 'action' => 'invoke', '[method]' => 'POST'));
+	Router::connect('/api/v1/users/:id', array('controller' => 'ApiV1UsersGet', 'action' => 'invoke', '[method]' => 'GET'), array('pass' => array('id'), 'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'));
+	Router::connect('/api/v1/users/:id', array('controller' => 'ApiV1UsersUpdate', 'action' => 'invoke', '[method]' => 'PUT'), array('pass' => array('id'), 'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'));
+	Router::connect('/api/v1/users/:id', array('controller' => 'ApiV1UsersDelete', 'action' => 'invoke', '[method]' => 'DELETE'), array('pass' => array('id'), 'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'));
+
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file

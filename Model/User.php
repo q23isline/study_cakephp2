@@ -16,34 +16,56 @@ class User extends AppModel {
 		'username' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
-				'message' => 'A username is required',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'この項目は必須入力です。',
+				'required' => 'create',
+			),
+			'alphaNumeric' => array(
+				// この指定だと日本語をエラーにしてくれないため、正規表現で指定する
+				// 'rule' => 'alphaNumeric',
+				'rule' => array('custom', '/^[a-z0-9]+$/i'),
+				'message' => 'この項目は文字と数字だけしか使えません。',
+			),
+			'maxLength' => array(
+				'rule' => array('maxLength', '50'),
+				'message' => 'この項目は50文字までです。',
+			),
+			'isUnique' => array(
+				'rule' => array('isUnique'),
+				'message' => 'その値はすでに使われています。',
 			),
 		),
 		'password' => array(
 			'required' => array(
 				'rule' => array('notBlank'),
-				'message' => 'A password is required',
+				'message' => 'この項目は必須入力です。',
+				'required' => 'create',
+			),
+			'alphaNumeric' => array(
+				'rule' => array('custom', '/^[a-z0-9]+$/i'),
+				'message' => 'この項目は文字と数字だけしか使えません。',
+			),
+			'maxLength' => array(
+				'rule' => array('maxLength', '50'),
+				'message' => 'この項目は50文字までです。',
 			),
 		),
 		'role_name' => array(
 			'valid' => array(
 				'rule' => array('inList', array('admin', 'author')),
-				'message' => 'Please enter a valid role',
+				'message' => 'admin または author を入力してください。',
+				'required' => 'create',
 				'allowEmpty' => false,
-			)
+			),
 		),
 		'name' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'この項目は必須入力です。',
+				'required' => 'create',
+			),
+			'maxLength' => array(
+				'rule' => array('maxLength', '50'),
+				'message' => 'この項目は50文字までです。',
 			),
 		),
 	);

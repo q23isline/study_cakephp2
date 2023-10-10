@@ -48,6 +48,14 @@ Cache::config('default', array('engine' => 'File'));
  *     'Plugin'                    => array('/path/to/plugins/', '/next/path/to/plugins/'),
  * ));
  */
+App::build(array(
+	'Controller' => array(
+		ROOT . DS . APP_DIR . DS . 'Controller' . DS,
+		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Api' . DS,
+		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Api' . DS . 'V1' . DS,
+		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Api' . DS . 'V1' . DS . 'Users' . DS,
+	),
+));
 
 /**
  * Custom Inflector rules can be set to correctly pluralize or singularize table, model, controller names or whatever other
