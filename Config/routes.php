@@ -13,6 +13,7 @@
 
 	// API
 	Router::connect('/api/v1/users', array('controller' => 'ApiV1UsersGetList', 'action' => 'invoke', '[method]' => 'GET'));
+	Router::connect('/api/v1/users/:id', array('controller' => 'ApiV1UsersGet', 'action' => 'invoke', '[method]' => 'GET'), array('pass' => array('id'), 'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'));
 
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
