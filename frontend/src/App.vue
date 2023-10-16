@@ -2,7 +2,9 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <a href="/v1/users">Vue Users</a> |
+      <a href="/users">CakePHP Users</a>
     </div>
     <router-view />
   </div>
