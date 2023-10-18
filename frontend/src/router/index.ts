@@ -30,6 +30,11 @@ const routes: Array<RouteConfig> = [
     component: () => import("../pages/users/UserPage.vue"),
     props: true,
   },
+  {
+    path: "/v1/users/add",
+    name: "UserAddPage",
+    component: () => import("../pages/users/UserAddPage.vue"),
+  },
 ];
 
 const router = new VueRouter({

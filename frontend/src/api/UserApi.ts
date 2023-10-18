@@ -66,6 +66,24 @@ class UserApi {
   }
 
   /**
+   * ユーザー追加
+   * @param data
+   */
+  public async save(data: {
+    username: string;
+    password: string;
+    roleName: string;
+    name: string;
+  }): Promise<void> {
+    await AppApi.post(`/api/v1/users`, {
+      username: data.username,
+      password: data.password,
+      roleName: data.roleName,
+      name: data.name,
+    });
+  }
+
+  /**
    * ユーザー削除
    * @param id
    */
