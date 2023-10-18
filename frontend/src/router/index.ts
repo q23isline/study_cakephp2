@@ -24,6 +24,12 @@ const routes: Array<RouteConfig> = [
     name: "UserListPage",
     component: () => import("../pages/users/UserListPage.vue"),
   },
+  {
+    path: "/v1/users/view/:userId([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})",
+    name: "UserPage",
+    component: () => import("../pages/users/UserPage.vue"),
+    props: true,
+  },
 ];
 
 const router = new VueRouter({

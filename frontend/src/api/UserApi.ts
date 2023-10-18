@@ -46,6 +46,26 @@ class UserApi {
   }
 
   /**
+   * ユーザー詳細取得
+   * @param id
+   */
+  public async findById(id: string): Promise<{ readonly data: User }> {
+    const res = await AppApi.get(`/api/v1/users/${id}`);
+
+    return {
+      data: new User(
+        res.data.data.id,
+        res.data.data.username,
+        res.data.data.password,
+        res.data.data.roleName,
+        res.data.data.name,
+        new Date(res.data.data.created),
+        new Date(res.data.data.modified)
+      ),
+    };
+  }
+
+  /**
    * ユーザー削除
    * @param id
    */
