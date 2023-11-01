@@ -47,6 +47,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { ElNotification } from "element-ui/types/notification";
 import User from "@/models/User";
 import UserApi from "@/api/UserApi";
 
@@ -66,6 +67,8 @@ export default class UserList extends Vue {
     },
     data: [],
   };
+
+  public $notify!: ElNotification;
 
   /**
    * ユーザー情報読み込み
@@ -108,6 +111,13 @@ export default class UserList extends Vue {
       } catch (error) {
         console.error(error);
       }
+
+      this.$notify({
+        title: "削除しました",
+        message: "",
+        type: "success",
+        duration: 2000,
+      });
 
       await this.load();
     }
