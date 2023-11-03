@@ -35,6 +35,12 @@ const routes: Array<RouteConfig> = [
     name: "UserAddPage",
     component: () => import("../pages/users/UserAddPage.vue"),
   },
+  {
+    path: "/v1/users/edit/:userId([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})",
+    name: "UserEditPage",
+    component: () => import("../pages/users/UserEditPage.vue"),
+    props: true,
+  },
 ];
 
 const router = new VueRouter({

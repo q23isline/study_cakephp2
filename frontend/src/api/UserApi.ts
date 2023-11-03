@@ -84,6 +84,25 @@ class UserApi {
   }
 
   /**
+   * ユーザー更新
+   * @param data
+   */
+  public async update(data: {
+    id: string;
+    username: string;
+    password: string;
+    roleName: string;
+    name: string;
+  }): Promise<void> {
+    await AppApi.put(`/api/v1/users/${data.id}`, {
+      username: data.username,
+      password: data.password,
+      roleName: data.roleName,
+      name: data.name,
+    });
+  }
+
+  /**
    * ユーザー削除
    * @param id
    */
