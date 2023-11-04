@@ -11,9 +11,9 @@
     <dt>Name</dt>
     <dd>{{ user.data.name }}</dd>
     <dt>Created</dt>
-    <dd>{{ user.data.created }}</dd>
+    <dd>{{ toDateTimeString(user.data.created) }}</dd>
     <dt>Modified</dt>
-    <dd>{{ user.data.modified }}</dd>
+    <dd>{{ toDateTimeString(user.data.modified) }}</dd>
   </dl>
 </template>
 
@@ -32,6 +32,18 @@ export default class UserView extends Vue {
   } = {
     data: new User("", "", "", "", "", new Date(), new Date()),
   };
+
+  /**
+   * yyyy/m/d HH:MM:SS 形式の文字列に変換する
+   * @param dateTime 日付
+   */
+  public toDateTimeString(dateTime: Date): string {
+    return (
+      dateTime.toLocaleDateString("ja-JP") +
+      " " +
+      dateTime.toLocaleTimeString("ja-JP")
+    );
+  }
 
   /**
    * ユーザー情報読み込み

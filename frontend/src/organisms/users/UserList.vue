@@ -21,8 +21,8 @@
             <td>{{ user.password }}</td>
             <td>{{ user.roleName }}</td>
             <td>{{ user.name }}</td>
-            <td>{{ user.created }}</td>
-            <td>{{ user.modified }}</td>
+            <td>{{ toDateTimeString(user.created) }}</td>
+            <td>{{ toDateTimeString(user.modified) }}</td>
             <td class="actions">
               <router-link :to="`/v1/users/view/${user.id}`">View</router-link>
               <router-link :to="`/v1/users/edit/${user.id}`">Edit</router-link>
@@ -69,6 +69,18 @@ export default class UserList extends Vue {
   };
 
   public $notify!: ElNotification;
+
+  /**
+   * yyyy/m/d HH:MM:SS 形式の文字列に変換する
+   * @param dateTime 日付
+   */
+  public toDateTimeString(dateTime: Date): string {
+    return (
+      dateTime.toLocaleDateString("ja-JP") +
+      " " +
+      dateTime.toLocaleTimeString("ja-JP")
+    );
+  }
 
   /**
    * ページングを変更する
