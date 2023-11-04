@@ -1,5 +1,14 @@
 <template>
   <div>
+    <el-select v-model="sortSelect.value" @change="changeSort">
+      <el-option
+        v-for="item in sortSelect.options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        >
+      </el-option>
+    </el-select>
     <el-table :data="users.data" @row-click="redirectView">
       <el-table-column label="Id" prop="id"></el-table-column>
       <el-table-column label="Username" prop="username"></el-table-column>
@@ -53,6 +62,68 @@ export default class UserList extends Vue {
   public page = 1;
   public pageSize = 10;
   public sort = "-username";
+  public sortSelect = {
+    options: [
+      {
+        value: "+id",
+        label: "Id 昇順",
+      },
+      {
+        value: "-id",
+        label: "Id 降順",
+      },
+      {
+        value: "+username",
+        label: "Username 昇順",
+      },
+      {
+        value: "-username",
+        label: "Username 降順",
+      },
+      {
+        value: "+password",
+        label: "Password 昇順",
+      },
+      {
+        value: "-password",
+        label: "Password 降順",
+      },
+      {
+        value: "+roleName",
+        label: "Role 昇順",
+      },
+      {
+        value: "-roleName",
+        label: "Role 降順",
+      },
+      {
+        value: "+name",
+        label: "Name 昇順",
+      },
+      {
+        value: "-name",
+        label: "Name 降順",
+      },
+      {
+        value: "+created",
+        label: "Created 昇順",
+      },
+      {
+        value: "-created",
+        label: "Created 降順",
+      },
+      {
+        value: "+modified",
+        label: "Modified 昇順",
+      },
+      {
+        value: "-modified",
+        label: "Modified 降順",
+      },
+    ],
+    value: "-username",
+  };
+
   public users: {
     meta: { page: number; pageSize: number; totalCount: number };
     data: User[];
@@ -77,6 +148,15 @@ export default class UserList extends Vue {
       " " +
       dateTime.toLocaleTimeString("ja-JP")
     );
+  }
+
+  /**
+   * ソート条件を変更する
+   * @param sort
+   */
+  public async changeSort(sort: string): Promise<void> {
+    this.sort = sort;
+    await this.load();
   }
 
   /**
