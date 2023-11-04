@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import UserForm from "@/organisms/users/UserForm.vue";
+import UserForm from "@/organisms/users/UserAddForm.vue";
 
 @Component({
   components: {
