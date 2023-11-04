@@ -6,7 +6,7 @@
         :key="item.value"
         :label="item.label"
         :value="item.value"
-        >
+      >
       </el-option>
     </el-select>
     <el-select v-model="pageSizeSelect.value" @change="changePageSize">
@@ -15,7 +15,7 @@
         :key="item.value"
         :label="item.label"
         :value="item.value"
-        >
+      >
       </el-option>
     </el-select>
     <el-table :data="users.data" @row-click="redirectView">
