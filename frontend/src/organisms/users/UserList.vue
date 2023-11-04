@@ -1,37 +1,34 @@
 <template>
   <div>
-    <table cellpadding="0" cellspacing="0">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Username</th>
-          <th>Password</th>
-          <th>Role Name</th>
-          <th>Name</th>
-          <th>Created</th>
-          <th>Modified</th>
-          <th class="actions">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <template v-for="user in users.data">
-          <tr :user="user" :key="user.id">
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.password }}</td>
-            <td>{{ user.roleName }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ toDateTimeString(user.created) }}</td>
-            <td>{{ toDateTimeString(user.modified) }}</td>
-            <td class="actions">
-              <router-link :to="`/v1/users/view/${user.id}`">View</router-link>
-              <router-link :to="`/v1/users/edit/${user.id}`">Edit</router-link>
-              <a @click="deleteRow(user.id)">Delete</a>
-            </td>
-          </tr>
+    <el-table :data="users.data" @row-click="redirectView">
+      <el-table-column label="Id" prop="id"></el-table-column>
+      <el-table-column label="Username" prop="username"></el-table-column>
+      <el-table-column label="Password" prop="password"></el-table-column>
+      <el-table-column label="Role" prop="roleName"></el-table-column>
+      <el-table-column label="Name" prop="name"></el-table-column>
+      <el-table-column label="Created" prop="created">
+        <template v-slot="scope">
+          {{ toDateTimeString(scope.row.created) }}
         </template>
-      </tbody>
-    </table>
+      </el-table-column>
+      <el-table-column label="Modified" prop="modified">
+        <template v-slot="scope">
+          {{ toDateTimeString(scope.row.modified) }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Actions">
+        <template v-slot="scope">
+          <el-button
+            icon="el-icon-edit-outline"
+            @click.stop="redirectEdit(scope.row.id)"
+          ></el-button>
+          <el-button
+            icon="el-icon-delete-solid"
+            @click.stop="deleteRow(scope.row.id)"
+          ></el-button>
+        </template>
+      </el-table-column>
+    </el-table>
     <div>
       <el-pagination
         background
@@ -89,6 +86,22 @@ export default class UserList extends Vue {
   public async changePage(page: number): Promise<void> {
     this.page = page;
     await this.load();
+  }
+
+  /**
+   * 詳細画面へリダイレクト
+   * @param row
+   */
+  public redirectView(row: { id: string }): void {
+    this.$router.push(`/v1/users/view/${row.id}`);
+  }
+
+  /**
+   * 編集画面へリダイレクト
+   * @param id
+   */
+  public redirectEdit(id: string): void {
+    this.$router.push(`/v1/users/edit/${id}`);
   }
 
   /**
