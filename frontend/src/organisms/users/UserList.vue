@@ -71,28 +71,10 @@ export default class UserList extends Vue {
   public $notify!: ElNotification;
 
   /**
-   * ユーザー情報読み込み
-   */
-  private async load(): Promise<void> {
-    try {
-      this.users = await UserApi.find(this.page, this.pageSize, this.sort);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  /**
-   * 初期化
-   */
-  private async mounted(): Promise<void> {
-    await this.load();
-  }
-
-  /**
    * ページングを変更する
    * @param page
    */
-  private async changePage(page: number): Promise<void> {
+  public async changePage(page: number): Promise<void> {
     this.page = page;
     await this.load();
   }
@@ -101,7 +83,7 @@ export default class UserList extends Vue {
    *1行削除
    * @param id
    */
-  private async deleteRow(id: string): Promise<void> {
+  public async deleteRow(id: string): Promise<void> {
     const isConfirmed = window.confirm(
       `Are you sure you want to delete # ${id}?`
     );
@@ -121,6 +103,24 @@ export default class UserList extends Vue {
 
       await this.load();
     }
+  }
+
+  /**
+   * ユーザー情報読み込み
+   */
+  private async load(): Promise<void> {
+    try {
+      this.users = await UserApi.find(this.page, this.pageSize, this.sort);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
+   * 初期化
+   */
+  private async mounted(): Promise<void> {
+    await this.load();
   }
 }
 </script>
