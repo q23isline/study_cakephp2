@@ -9,6 +9,15 @@
         >
       </el-option>
     </el-select>
+    <el-select v-model="pageSizeSelect.value" @change="changePageSize">
+      <el-option
+        v-for="item in pageSizeSelect.options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        >
+      </el-option>
+    </el-select>
     <el-table :data="users.data" @row-click="redirectView">
       <el-table-column label="Id" prop="id"></el-table-column>
       <el-table-column label="Username" prop="username"></el-table-column>
@@ -124,6 +133,24 @@ export default class UserList extends Vue {
     value: "-username",
   };
 
+  public pageSizeSelect = {
+    options: [
+      {
+        value: 10,
+        label: "10件",
+      },
+      {
+        value: 20,
+        label: "20件",
+      },
+      {
+        value: 50,
+        label: "50件",
+      },
+    ],
+    value: 10,
+  };
+
   public users: {
     meta: { page: number; pageSize: number; totalCount: number };
     data: User[];
@@ -156,6 +183,15 @@ export default class UserList extends Vue {
    */
   public async changeSort(sort: string): Promise<void> {
     this.sort = sort;
+    await this.load();
+  }
+
+  /**
+   * 表示件数を変更する
+   * @param pageSize
+   */
+  public async changePageSize(pageSize: number): Promise<void> {
+    this.pageSize = pageSize;
     await this.load();
   }
 
