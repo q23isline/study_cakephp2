@@ -89,7 +89,8 @@ class ApiV1UsersGetListController extends AppController {
  */
 	private function __findUsers(int $page, int $pageSize, string $sort) : array {
 		$orderKey = substr($sort, 0, 1) === '+' ? 'ASC' : 'DESC';
-		$sortKey = substr($sort, 1);
+		$requestSortKey = substr($sort, 1);
+		$sortKey = $this->__toColumnName($requestSortKey);
 		$order = "{$sortKey} {$orderKey}";
 
 		$offset = ($page - 1) * $pageSize;
@@ -115,6 +116,21 @@ class ApiV1UsersGetListController extends AppController {
 		}
 
 		return $result;
+	}
+
+/**
+ * テーブル定義のカラム名に変換する
+ *
+ * @param string $sortKey ソートキー
+ * @return string
+ */
+	private function __toColumnName(string $sortKey) : string {
+		switch($sortKey) {
+			case 'roleName':
+				return 'role_name';
+			default:
+				return $sortKey;
+		}
 	}
 
 /**
