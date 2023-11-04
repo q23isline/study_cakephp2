@@ -39,7 +39,7 @@ export default class UserPage extends Vue {
    *1行削除
    * @param id
    */
-  private async deleteView(id: string): Promise<void> {
+  public async deleteView(id: string): Promise<void> {
     const isConfirmed = window.confirm(
       `Are you sure you want to delete # ${id}?`
     );
