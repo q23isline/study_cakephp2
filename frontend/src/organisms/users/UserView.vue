@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import User from "@/models/User";
+import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
 
 @Component
@@ -30,7 +30,15 @@ export default class UserView extends Vue {
   public user: {
     data: User;
   } = {
-    data: new User("", "", "", "", "", new Date(), new Date()),
+    data: {
+      id: "",
+      username: "",
+      password: "",
+      roleName: "",
+      name: "",
+      created: new Date(),
+      modified: new Date()
+    },
   };
 
   /**

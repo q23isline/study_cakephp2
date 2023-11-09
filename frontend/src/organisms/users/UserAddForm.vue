@@ -58,7 +58,7 @@ import { AxiosError } from "axios";
 import { Component, Vue } from "vue-property-decorator";
 import { ElForm, ValidateCallback } from "element-ui/types/form";
 import { ElNotification } from "element-ui/types/notification";
-import ApiErrorItem from "@/models/ApiErrorItem";
+import { ApiErrorItem } from "@/models/ApiErrorItem";
 import UserApi from "@/api/UserApi";
 
 @Component

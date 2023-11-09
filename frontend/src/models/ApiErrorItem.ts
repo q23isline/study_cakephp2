@@ -1,9 +1,4 @@
-export default class ApiErrorItem {
+export type ApiErrorItem = {
   field: string;
   reason: string;
-
-  constructor(field: string, reason: string) {
-    this.field = field;
-    this.reason = reason;
-  }
-}
+};

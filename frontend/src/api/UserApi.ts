@@ -1,5 +1,5 @@
 import { AppApi } from "@/api/AppApi";
-import User from "@/models/User";
+import { User } from "@/models/User";
 import { ListMeta } from "@/models/ListMeta";
 
 class UserApi {
@@ -25,15 +25,15 @@ class UserApi {
       },
     });
     const users = res.data.data.map((user: User) => {
-      return new User(
-        user.id,
-        user.username,
-        user.password,
-        user.roleName,
-        user.name,
-        new Date(user.created),
-        new Date(user.modified)
-      );
+      return {
+        id: user.id,
+        username: user.username,
+        password: user.password,
+        roleName: user.roleName,
+        name: user.name,
+        created: new Date(user.created),
+        modified: new Date(user.modified)
+      };
     });
 
     return {
@@ -54,15 +54,15 @@ class UserApi {
     const res = await AppApi.get(`/api/v1/users/${id}`);
 
     return {
-      data: new User(
-        res.data.data.id,
-        res.data.data.username,
-        res.data.data.password,
-        res.data.data.roleName,
-        res.data.data.name,
-        new Date(res.data.data.created),
-        new Date(res.data.data.modified)
-      ),
+      data: {
+        id: res.data.data.id,
+        username: res.data.data.username,
+        password: res.data.data.password,
+        roleName: res.data.data.roleName,
+        name: res.data.data.name,
+        created: new Date(res.data.data.created),
+        modified: new Date(res.data.data.modified)
+      }
     };
   }
 

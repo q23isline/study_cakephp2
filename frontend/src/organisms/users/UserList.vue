@@ -63,7 +63,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { ElNotification } from "element-ui/types/notification";
-import User from "@/models/User";
+import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
 
 @Component
