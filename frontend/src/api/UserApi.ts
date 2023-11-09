@@ -1,5 +1,6 @@
 import { AppApi } from "@/api/AppApi";
 import User from "@/models/User";
+import { ListMeta } from "@/models/ListMeta";
 
 class UserApi {
   /**
@@ -13,7 +14,7 @@ class UserApi {
     pageSize = 10,
     sort = "-username"
   ): Promise<{
-    readonly meta: { page: number; pageSize: number; totalCount: number };
+    readonly meta: ListMeta;
     readonly data: User[];
   }> {
     const res = await AppApi.get("/api/v1/users", {
