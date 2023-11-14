@@ -3,8 +3,8 @@ import {
   UserApiSaveParam,
   UserApiUpdateParam,
 } from "@/api/params/UserApiParam";
-import { User } from "@/models/User";
-import { ListMeta } from "@/models/ListMeta";
+import { UserApiUserReturn } from "@/api/returns/UserApiReturn";
+import { ListMetaReturn } from "@/api/returns/ListMetaReturn";
 
 class UserApi {
   /**
@@ -18,8 +18,8 @@ class UserApi {
     pageSize = 10,
     sort = "-username"
   ): Promise<{
-    readonly meta: ListMeta;
-    readonly data: User[];
+    readonly meta: ListMetaReturn;
+    readonly data: UserApiUserReturn[];
   }> {
     const res = await AppApi.get("/api/v1/users", {
       params: {
@@ -28,7 +28,7 @@ class UserApi {
         sort: sort,
       },
     });
-    const users = res.data.data.map((user: User) => {
+    const users = res.data.data.map((user: UserApiUserReturn) => {
       return {
         id: user.id,
         username: user.username,
@@ -54,7 +54,9 @@ class UserApi {
    * ユーザー詳細取得
    * @param id
    */
-  public async findById(id: string): Promise<{ readonly data: User }> {
+  public async findById(
+    id: string
+  ): Promise<{ readonly data: UserApiUserReturn }> {
     const res = await AppApi.get(`/api/v1/users/${id}`);
 
     return {

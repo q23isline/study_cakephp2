@@ -63,8 +63,10 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { ElNotification } from "element-ui/types/notification";
+import { ListMeta } from "@/models/ListMeta";
 import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
+import { UserApiUserReturn } from "@/api/returns/UserApiReturn";
 
 @Component
 export default class UserList extends Vue {
@@ -152,7 +154,7 @@ export default class UserList extends Vue {
   };
 
   public users: {
-    meta: { page: number; pageSize: number; totalCount: number };
+    meta: ListMeta;
     data: User[];
   } = {
     meta: {
@@ -251,7 +253,21 @@ export default class UserList extends Vue {
    */
   private async load(): Promise<void> {
     try {
-      this.users = await UserApi.find(this.page, this.pageSize, this.sort);
+      const users = await UserApi.find(this.page, this.pageSize, this.sort);
+      this.users.meta.page = users.meta.page;
+      this.users.meta.pageSize = users.meta.pageSize;
+      this.users.meta.totalCount = users.meta.totalCount;
+      this.users.data = users.data.map((user: UserApiUserReturn) => {
+        return {
+          id: user.id,
+          username: user.username,
+          password: user.password,
+          roleName: user.roleName,
+          name: user.name,
+          created: user.created,
+          modified: user.modified,
+        };
+      });
     } catch (error) {
       console.error(error);
     }

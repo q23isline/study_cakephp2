@@ -58,7 +58,14 @@ export default class UserView extends Vue {
    */
   private async load(): Promise<void> {
     try {
-      this.user = await UserApi.findById(this.userId);
+      const user = await UserApi.findById(this.userId);
+      this.user.data.id = user.data.id;
+      this.user.data.username = user.data.username;
+      this.user.data.password = user.data.password;
+      this.user.data.roleName = user.data.roleName;
+      this.user.data.name = user.data.name;
+      this.user.data.created = user.data.created;
+      this.user.data.modified = user.data.modified;
     } catch (error) {
       console.error(error);
     }
