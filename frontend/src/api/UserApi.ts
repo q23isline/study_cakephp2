@@ -1,4 +1,8 @@
 import { AppApi } from "@/api/AppApi";
+import {
+  UserApiSaveParam,
+  UserApiUpdateParam,
+} from "@/api/params/UserApiParam";
 import { User } from "@/models/User";
 import { ListMeta } from "@/models/ListMeta";
 
@@ -68,38 +72,27 @@ class UserApi {
 
   /**
    * ユーザー追加
-   * @param data
+   * @param param
    */
-  public async save(data: {
-    username: string;
-    password: string;
-    roleName: string;
-    name: string;
-  }): Promise<void> {
+  public async save(param: UserApiSaveParam): Promise<void> {
     await AppApi.post(`/api/v1/users`, {
-      username: data.username,
-      password: data.password,
-      roleName: data.roleName,
-      name: data.name,
+      username: param.username,
+      password: param.password,
+      roleName: param.roleName,
+      name: param.name,
     });
   }
 
   /**
    * ユーザー更新
-   * @param data
+   * @param param
    */
-  public async update(data: {
-    id: string;
-    username: string;
-    password: string;
-    roleName: string;
-    name: string;
-  }): Promise<void> {
-    await AppApi.put(`/api/v1/users/${data.id}`, {
-      username: data.username,
-      password: data.password,
-      roleName: data.roleName,
-      name: data.name,
+  public async update(param: UserApiUpdateParam): Promise<void> {
+    await AppApi.put(`/api/v1/users/${param.id}`, {
+      username: param.username,
+      password: param.password,
+      roleName: param.roleName,
+      name: param.name,
     });
   }
 
