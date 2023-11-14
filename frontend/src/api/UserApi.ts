@@ -36,7 +36,7 @@ class UserApi {
         roleName: user.roleName,
         name: user.name,
         created: new Date(user.created),
-        modified: new Date(user.modified)
+        modified: new Date(user.modified),
       };
     });
 
@@ -65,8 +65,8 @@ class UserApi {
         roleName: res.data.data.roleName,
         name: res.data.data.name,
         created: new Date(res.data.data.created),
-        modified: new Date(res.data.data.modified)
-      }
+        modified: new Date(res.data.data.modified),
+      },
     };
   }
 

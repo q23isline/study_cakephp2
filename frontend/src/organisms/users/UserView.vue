@@ -37,7 +37,7 @@ export default class UserView extends Vue {
       roleName: "",
       name: "",
       created: new Date(),
-      modified: new Date()
+      modified: new Date(),
     },
   };
 
