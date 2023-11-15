@@ -166,7 +166,7 @@ export default class UserForm extends Vue {
    */
   private async load(): Promise<void> {
     try {
-      const user = await UserApi.findById(this.userId);
+      const user = await UserApi.get(this.userId);
       this.user.username = user.data.username;
       this.user.password = user.data.password;
       this.user.roleName = user.data.roleName;

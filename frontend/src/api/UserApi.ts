@@ -14,7 +14,7 @@ class UserApi {
    * @param pageSize
    * @param sort
    */
-  public async find(
+  public async getList(
     page = 1,
     pageSize = 10,
     sort = "-username"
@@ -73,9 +73,7 @@ class UserApi {
    * ユーザー詳細取得
    * @param id
    */
-  public async findById(
-    id: string
-  ): Promise<{ readonly data: UserApiUserReturn }> {
+  public async get(id: string): Promise<{ readonly data: UserApiUserReturn }> {
     const res = await AppApi.get(`/api/v1/users/${id}`).catch((e) => {
       if (e.response) {
         console.error(e.response.data);

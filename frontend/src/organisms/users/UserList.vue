@@ -245,7 +245,7 @@ export default class UserList extends Vue {
    * ユーザー情報読み込み
    */
   private async load(): Promise<void> {
-    const users = await UserApi.find(this.page, this.pageSize, this.sort);
+    const users = await UserApi.getList(this.page, this.pageSize, this.sort);
     this.users.meta.page = users.meta.page;
     this.users.meta.pageSize = users.meta.pageSize;
     this.users.meta.totalCount = users.meta.totalCount;
