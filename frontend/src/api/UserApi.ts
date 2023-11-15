@@ -5,6 +5,7 @@ import {
 } from "@/api/params/UserApiParam";
 import { UserApiUserReturn } from "@/api/returns/UserApiReturn";
 import { ListMetaReturn } from "@/api/returns/ListMetaReturn";
+import ValidateError from "@/exception/ValidateError";
 
 class UserApi {
   /**
@@ -27,7 +28,25 @@ class UserApi {
         pageSize: pageSize,
         sort: sort,
       },
+    }).catch((e) => {
+      // link https://axios-http.com/ja/docs/handling_errors
+      if (e.response) {
+        // リクエストが行われ、サーバーは 2xx の範囲から外れるステータスコードで応答しました
+        console.error(e.response.data);
+        console.error(e.response.status);
+        console.error(e.response.headers);
+      } else if (e.request) {
+        // リクエストは行われましたが、応答がありませんでした
+        console.error(e.request);
+      } else {
+        // エラーをトリガーしたリクエストの設定中に何かが発生しました
+        console.error("Error", e.message);
+      }
+
+      console.error(e.config);
+      throw e;
     });
+
     const users = res.data.data.map((user: UserApiUserReturn) => {
       return {
         id: user.id,
@@ -57,7 +76,20 @@ class UserApi {
   public async findById(
     id: string
   ): Promise<{ readonly data: UserApiUserReturn }> {
-    const res = await AppApi.get(`/api/v1/users/${id}`);
+    const res = await AppApi.get(`/api/v1/users/${id}`).catch((e) => {
+      if (e.response) {
+        console.error(e.response.data);
+        console.error(e.response.status);
+        console.error(e.response.headers);
+      } else if (e.request) {
+        console.error(e.request);
+      } else {
+        console.error("Error", e.message);
+      }
+
+      console.error(e.config);
+      throw e;
+    });
 
     return {
       data: {
@@ -82,6 +114,28 @@ class UserApi {
       password: param.password,
       roleName: param.roleName,
       name: param.name,
+    }).catch((e) => {
+      if (e.response) {
+        if (e.response.status === 400) {
+          const apiError = new ValidateError(
+            e.response.data.error.message,
+            e.response.data.error.errors
+          );
+
+          throw apiError;
+        } else {
+          console.error(e.response.data);
+          console.error(e.response.status);
+          console.error(e.response.headers);
+        }
+      } else if (e.request) {
+        console.error(e.request);
+      } else {
+        console.error("Error", e.message);
+      }
+
+      console.error(e.config);
+      throw e;
     });
   }
 
@@ -95,6 +149,28 @@ class UserApi {
       password: param.password,
       roleName: param.roleName,
       name: param.name,
+    }).catch((e) => {
+      if (e.response) {
+        if (e.response.status === 400) {
+          const apiError = new ValidateError(
+            e.response.data.error.message,
+            e.response.data.error.errors
+          );
+
+          throw apiError;
+        } else {
+          console.error(e.response.data);
+          console.error(e.response.status);
+          console.error(e.response.headers);
+        }
+      } else if (e.request) {
+        console.error(e.request);
+      } else {
+        console.error("Error", e.message);
+      }
+
+      console.error(e.config);
+      throw e;
     });
   }
 
@@ -103,7 +179,20 @@ class UserApi {
    * @param id
    */
   public async delete(id: string): Promise<void> {
-    await AppApi.delete(`/api/v1/users/${id}`);
+    await AppApi.delete(`/api/v1/users/${id}`).catch((e) => {
+      if (e.response) {
+        console.error(e.response.data);
+        console.error(e.response.status);
+        console.error(e.response.headers);
+      } else if (e.request) {
+        console.error(e.request);
+      } else {
+        console.error("Error", e.message);
+      }
+
+      console.error(e.config);
+      throw e;
+    });
   }
 }
 

@@ -1,4 +1,4 @@
-export type ApiErrorItem = {
+export type ErrorItem = {
   field: string;
   reason: string;
 };

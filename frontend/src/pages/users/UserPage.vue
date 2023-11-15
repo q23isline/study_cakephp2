@@ -44,11 +44,7 @@ export default class UserPage extends Vue {
       `Are you sure you want to delete # ${id}?`
     );
     if (isConfirmed) {
-      try {
-        await UserApi.delete(id);
-      } catch (error) {
-        console.error(error);
-      }
+      await UserApi.delete(id);
 
       this.$notify({
         title: "削除しました",

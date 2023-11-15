@@ -231,11 +231,7 @@ export default class UserList extends Vue {
       `Are you sure you want to delete # ${id}?`
     );
     if (isConfirmed) {
-      try {
-        await UserApi.delete(id);
-      } catch (error) {
-        console.error(error);
-      }
+      await UserApi.delete(id);
 
       this.$notify({
         title: "削除しました",
@@ -252,25 +248,21 @@ export default class UserList extends Vue {
    * ユーザー情報読み込み
    */
   private async load(): Promise<void> {
-    try {
-      const users = await UserApi.find(this.page, this.pageSize, this.sort);
-      this.users.meta.page = users.meta.page;
-      this.users.meta.pageSize = users.meta.pageSize;
-      this.users.meta.totalCount = users.meta.totalCount;
-      this.users.data = users.data.map((user: UserApiUserReturn) => {
-        return {
-          id: user.id,
-          username: user.username,
-          password: user.password,
-          roleName: user.roleName,
-          name: user.name,
-          created: user.created,
-          modified: user.modified,
-        };
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    const users = await UserApi.find(this.page, this.pageSize, this.sort);
+    this.users.meta.page = users.meta.page;
+    this.users.meta.pageSize = users.meta.pageSize;
+    this.users.meta.totalCount = users.meta.totalCount;
+    this.users.data = users.data.map((user: UserApiUserReturn) => {
+      return {
+        id: user.id,
+        username: user.username,
+        password: user.password,
+        roleName: user.roleName,
+        name: user.name,
+        created: user.created,
+        modified: user.modified,
+      };
+    });
   }
 
   /**

@@ -54,12 +54,11 @@
 </template>
 
 <script lang="ts">
-import { AxiosError } from "axios";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { ElForm, ValidateCallback } from "element-ui/types/form";
 import { ElNotification } from "element-ui/types/notification";
-import { ApiErrorItem } from "@/models/ApiErrorItem";
 import UserApi from "@/api/UserApi";
+import ValidateError from "@/exception/ValidateError";
 
 @Component
 export default class UserForm extends Vue {
@@ -139,26 +138,23 @@ export default class UserForm extends Vue {
 
           this.$router.push("/v1/users");
         } catch (e) {
-          this.$notify({
-            title: "エラーがあります",
-            message: "",
-            type: "error",
-            duration: 2000,
-          });
-
-          const err = e as AxiosError;
-          if (err.response && err.response.status === 400) {
-            const apiErrors: ApiErrorItem[] = err.response.data.error.errors;
+          if (e instanceof ValidateError) {
+            this.$notify({
+              title: "エラーがあります",
+              message: "",
+              type: "error",
+              duration: 2000,
+            });
 
             // 2回目のエラーでメッセージが消えてしまうため、消えないように初期化した後少し待つ必要がある
             this.errorMessages = {};
             await this.sleep(10);
 
-            apiErrors.forEach((apiError: { field: string; reason: string }) => {
+            console.log(e);
+
+            e.errors.forEach((apiError: { field: string; reason: string }) => {
               this.$set(this.errorMessages, apiError.field, apiError.reason);
             });
-          } else {
-            console.error(e);
           }
         }
       }
