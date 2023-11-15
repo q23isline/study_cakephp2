@@ -16,6 +16,19 @@ class ApiV1UsersGetListController extends AppController {
 	public $uses = ['User'];
 
 /**
+ * @var array<string,string>
+ */
+	public const SORT_TO_COLUMN = [
+		'id' => 'id',
+		'username' => 'username',
+		'password' => 'password',
+		'roleName' => 'role_name',
+		'name' => 'name',
+		'created' => 'created',
+		'modified' => 'modified',
+	];
+
+/**
  * beforeFilter
  *
  * @return void
@@ -72,7 +85,7 @@ class ApiV1UsersGetListController extends AppController {
 		}
 
 		$sortKey = substr($sort, 1);
-		if (!in_array($sortKey, ['id', 'username', 'password', 'roleName', 'name', 'created', 'modified'], true)) {
+		if (!in_array($sortKey, array_keys(self::SORT_TO_COLUMN), true)) {
 			return false;
 		}
 
@@ -125,12 +138,7 @@ class ApiV1UsersGetListController extends AppController {
  * @return string
  */
 	private function __toColumnName(string $sortKey) : string {
-		switch($sortKey) {
-			case 'roleName':
-				return 'role_name';
-			default:
-				return $sortKey;
-		}
+		return self::SORT_TO_COLUMN[$sortKey];
 	}
 
 /**
