@@ -67,6 +67,7 @@ import { ListMeta } from "@/models/ListMeta";
 import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
 import { UserApiUserReturn } from "@/api/returns/UserApiReturn";
+import DateUtil from "@/utils/DateUtil";
 
 @Component
 export default class UserList extends Vue {
@@ -172,11 +173,7 @@ export default class UserList extends Vue {
    * @param dateTime 日付
    */
   public toDateTimeString(dateTime: Date): string {
-    return (
-      dateTime.toLocaleDateString("ja-JP") +
-      " " +
-      dateTime.toLocaleTimeString("ja-JP")
-    );
+    return DateUtil.toDateTimeString(dateTime);
   }
 
   /**

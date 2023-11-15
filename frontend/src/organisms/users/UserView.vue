@@ -21,6 +21,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
+import DateUtil from "@/utils/DateUtil";
 
 @Component
 export default class UserView extends Vue {
@@ -46,11 +47,7 @@ export default class UserView extends Vue {
    * @param dateTime 日付
    */
   public toDateTimeString(dateTime: Date): string {
-    return (
-      dateTime.toLocaleDateString("ja-JP") +
-      " " +
-      dateTime.toLocaleTimeString("ja-JP")
-    );
+    return DateUtil.toDateTimeString(dateTime);
   }
 
   /**
