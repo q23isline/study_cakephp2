@@ -1,9 +1,7 @@
+import { ListMetaResponse } from "@/models/types/ListMetaResponse";
+import { UserApiDataResponse } from "@/models/types/UserApiDataResponse";
+
 export type UserApiResponse = {
-  id: string;
-  username: string;
-  password: string;
-  roleName: string;
-  name: string;
-  created: Date;
-  modified: Date;
+  data: UserApiDataResponse[];
+  meta: ListMetaResponse;
 };

@@ -4,8 +4,8 @@ import {
   UserApiSaveParam,
   UserApiUpdateParam,
 } from "@/models/types/UserApiParam";
+import { UserApiDataResponse } from "@/models/types/UserApiDataResponse";
 import { UserApiResponse } from "@/models/types/UserApiResponse";
-import { ListMetaResponse } from "@/models/types/ListMetaResponse";
 import ValidateError from "@/exception/ValidateError";
 
 class UserApi {
@@ -19,10 +19,7 @@ class UserApi {
     page = 1,
     pageSize = 10,
     sort = "-username"
-  ): Promise<{
-    readonly meta: ListMetaResponse;
-    readonly data: UserApiResponse[];
-  }> {
+  ): Promise<UserApiResponse> {
     const res = await AppApi.get("/api/v1/users", {
       params: {
         page: page,
@@ -48,7 +45,7 @@ class UserApi {
       throw e;
     });
 
-    const users = res.data.data.map((user: UserApiResponse) => {
+    const users = res.data.data.map((user: UserApiDataResponse) => {
       return {
         id: user.id,
         username: user.username,
@@ -74,7 +71,9 @@ class UserApi {
    * ユーザー詳細取得
    * @param id
    */
-  public async get(id: string): Promise<{ readonly data: UserApiResponse }> {
+  public async get(
+    id: string
+  ): Promise<{ readonly data: UserApiDataResponse }> {
     const res = await AppApi.get(`/api/v1/users/${id}`).catch(
       (e: AxiosError) => {
         if (e.response) {

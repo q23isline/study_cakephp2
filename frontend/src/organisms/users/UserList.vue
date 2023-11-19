@@ -63,10 +63,10 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { ElNotification } from "element-ui/types/notification";
-import { ListMeta } from "@/models/ListMeta";
+import { ListMetaResponse } from "@/models/types/ListMetaResponse";
 import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
-import { UserApiResponse } from "@/models/types/UserApiResponse";
+import { UserApiDataResponse } from "@/models/types/UserApiDataResponse";
 import DateUtil from "@/utils/DateUtil";
 
 @Component
@@ -155,7 +155,7 @@ export default class UserList extends Vue {
   };
 
   public users: {
-    meta: ListMeta;
+    meta: ListMetaResponse;
     data: User[];
   } = {
     meta: {
@@ -249,7 +249,7 @@ export default class UserList extends Vue {
     this.users.meta.page = users.meta.page;
     this.users.meta.pageSize = users.meta.pageSize;
     this.users.meta.totalCount = users.meta.totalCount;
-    this.users.data = users.data.map((user: UserApiResponse) => {
+    this.users.data = users.data.map((user: UserApiDataResponse) => {
       return {
         id: user.id,
         username: user.username,
