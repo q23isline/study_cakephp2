@@ -66,7 +66,7 @@ import { ElNotification } from "element-ui/types/notification";
 import { ListMeta } from "@/models/ListMeta";
 import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
-import { UserApiUserReturn } from "@/api/returns/UserApiReturn";
+import { UserApiResponse } from "@/models/types/UserApiResponse";
 import DateUtil from "@/utils/DateUtil";
 
 @Component
@@ -249,7 +249,7 @@ export default class UserList extends Vue {
     this.users.meta.page = users.meta.page;
     this.users.meta.pageSize = users.meta.pageSize;
     this.users.meta.totalCount = users.meta.totalCount;
-    this.users.data = users.data.map((user: UserApiUserReturn) => {
+    this.users.data = users.data.map((user: UserApiResponse) => {
       return {
         id: user.id,
         username: user.username,
