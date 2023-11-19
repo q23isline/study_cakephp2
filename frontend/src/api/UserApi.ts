@@ -4,8 +4,10 @@ import {
   UserApiSaveParam,
   UserApiUpdateParam,
 } from "@/models/types/UserApiParam";
-import { UserApiDataResponse } from "@/models/types/UserApiDataResponse";
-import { UserApiResponse } from "@/models/types/UserApiResponse";
+import {
+  UserApiListResponse,
+  UserApiGetResponse,
+} from "@/models/types/UserApiResponse";
 import ValidateError from "@/exception/ValidateError";
 
 class UserApi {
@@ -19,8 +21,8 @@ class UserApi {
     page = 1,
     pageSize = 10,
     sort = "-username"
-  ): Promise<UserApiResponse> {
-    const res = await AppApi.get("/api/v1/users", {
+  ): Promise<UserApiListResponse> {
+    const res = await AppApi.get<UserApiListResponse>("/api/v1/users", {
       params: {
         page: page,
         pageSize: pageSize,
@@ -45,7 +47,7 @@ class UserApi {
       throw e;
     });
 
-    const users = res.data.data.map((user: UserApiDataResponse) => {
+    const users = res.data.data.map((user) => {
       return {
         id: user.id,
         username: user.username,
@@ -71,25 +73,23 @@ class UserApi {
    * ユーザー詳細取得
    * @param id
    */
-  public async get(
-    id: string
-  ): Promise<{ readonly data: UserApiDataResponse }> {
-    const res = await AppApi.get(`/api/v1/users/${id}`).catch(
-      (e: AxiosError) => {
-        if (e.response) {
-          console.error(e.response.data);
-          console.error(e.response.status);
-          console.error(e.response.headers);
-        } else if (e.request) {
-          console.error(e.request);
-        } else {
-          console.error("Error", e.message);
-        }
-
-        console.error(e.config);
-        throw e;
+  public async get(id: string): Promise<UserApiGetResponse> {
+    const res = await AppApi.get<UserApiGetResponse>(
+      `/api/v1/users/${id}`
+    ).catch((e: AxiosError) => {
+      if (e.response) {
+        console.error(e.response.data);
+        console.error(e.response.status);
+        console.error(e.response.headers);
+      } else if (e.request) {
+        console.error(e.request);
+      } else {
+        console.error("Error", e.message);
       }
-    );
+
+      console.error(e.config);
+      throw e;
+    });
 
     return {
       data: {
