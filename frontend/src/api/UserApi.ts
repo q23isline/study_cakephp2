@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { AppApi } from "@/api/AppApi";
 import {
   UserApiSaveParam,
@@ -28,7 +29,7 @@ class UserApi {
         pageSize: pageSize,
         sort: sort,
       },
-    }).catch((e) => {
+    }).catch((e: AxiosError) => {
       // link https://axios-http.com/ja/docs/handling_errors
       if (e.response) {
         // リクエストが行われ、サーバーは 2xx の範囲から外れるステータスコードで応答しました
@@ -74,20 +75,22 @@ class UserApi {
    * @param id
    */
   public async get(id: string): Promise<{ readonly data: UserApiUserReturn }> {
-    const res = await AppApi.get(`/api/v1/users/${id}`).catch((e) => {
-      if (e.response) {
-        console.error(e.response.data);
-        console.error(e.response.status);
-        console.error(e.response.headers);
-      } else if (e.request) {
-        console.error(e.request);
-      } else {
-        console.error("Error", e.message);
-      }
+    const res = await AppApi.get(`/api/v1/users/${id}`).catch(
+      (e: AxiosError) => {
+        if (e.response) {
+          console.error(e.response.data);
+          console.error(e.response.status);
+          console.error(e.response.headers);
+        } else if (e.request) {
+          console.error(e.request);
+        } else {
+          console.error("Error", e.message);
+        }
 
-      console.error(e.config);
-      throw e;
-    });
+        console.error(e.config);
+        throw e;
+      }
+    );
 
     return {
       data: {
@@ -112,7 +115,7 @@ class UserApi {
       password: param.password,
       roleName: param.roleName,
       name: param.name,
-    }).catch((e) => {
+    }).catch((e: AxiosError) => {
       if (e.response) {
         if (e.response.status === 400) {
           const apiError = new ValidateError(
@@ -147,7 +150,7 @@ class UserApi {
       password: param.password,
       roleName: param.roleName,
       name: param.name,
-    }).catch((e) => {
+    }).catch((e: AxiosError) => {
       if (e.response) {
         if (e.response.status === 400) {
           const apiError = new ValidateError(
@@ -177,7 +180,7 @@ class UserApi {
    * @param id
    */
   public async delete(id: string): Promise<void> {
-    await AppApi.delete(`/api/v1/users/${id}`).catch((e) => {
+    await AppApi.delete(`/api/v1/users/${id}`).catch((e: AxiosError) => {
       if (e.response) {
         console.error(e.response.data);
         console.error(e.response.status);
