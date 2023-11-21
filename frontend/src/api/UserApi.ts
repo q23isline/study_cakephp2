@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { AppApi } from "@/api/AppApi";
 import {
+  UserApiListParam,
   UserApiSaveParam,
   UserApiUpdateParam,
 } from "@/models/types/UserApiParam";
@@ -13,21 +14,11 @@ import ValidateError from "@/exception/ValidateError";
 class UserApi {
   /**
    * ユーザー情報取得
-   * @param page
-   * @param pageSize
-   * @param sort
+   * @param params
    */
-  public async getList(
-    page = 1,
-    pageSize = 10,
-    sort = "-username"
-  ): Promise<UserApiListResponse> {
+  public async getList(params: UserApiListParam): Promise<UserApiListResponse> {
     const res = await AppApi.get<UserApiListResponse>("/api/v1/users", {
-      params: {
-        page: page,
-        pageSize: pageSize,
-        sort: sort,
-      },
+      params: params,
     }).catch((e: AxiosError) => {
       // link https://axios-http.com/ja/docs/handling_errors
       if (e.response) {

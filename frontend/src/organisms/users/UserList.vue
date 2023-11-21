@@ -67,6 +67,7 @@ import { ListMetaResponse } from "@/models/types/ListMetaResponse";
 import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
 import { UserApiDataResponse } from "@/models/types/UserApiDataResponse";
+import { UserApiListParam } from "@/models/types/UserApiParam";
 import DateUtil from "@/utils/DateUtil";
 
 @Component
@@ -245,7 +246,8 @@ export default class UserList extends Vue {
    * ユーザー情報読み込み
    */
   private async load(): Promise<void> {
-    const users = await UserApi.getList(this.page, this.pageSize, this.sort);
+    const params = new UserApiListParam(this.page, this.pageSize, this.sort);
+    const users = await UserApi.getList(params);
     this.users.meta.page = users.meta.page;
     this.users.meta.pageSize = users.meta.pageSize;
     this.users.meta.totalCount = users.meta.totalCount;
