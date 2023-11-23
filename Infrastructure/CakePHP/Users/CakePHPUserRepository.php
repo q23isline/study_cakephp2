@@ -148,6 +148,29 @@ final class CakePHPUserRepository implements IUserRepository {
 
 /**
  * {@inheritDoc}
+ * @throws \InternalErrorException
+ */
+	public function update(User $user) : void {
+		/** @var \User $model */
+		$model = ClassRegistry::init('User');
+		$saveData = [
+			'User' => [
+				'id' => $user->getId()->getValue(),
+				'username' => $user->getUsername()->getValue(),
+				'password' => $user->getPassword()->getValue(),
+				'role_name' => $user->getRoleName()->getValue(),
+				'name' => $user->getName()->getValue(),
+			],
+		];
+
+		$model->set($saveData);
+		if (!$model->save()) {
+			throw new InternalErrorException();
+		}
+	}
+
+/**
+ * {@inheritDoc}
  * @throws \App\Domain\Shared\Exception\ValidateException
  */
 	public function validate(User $user) : void {

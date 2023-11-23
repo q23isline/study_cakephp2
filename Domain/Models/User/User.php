@@ -206,6 +206,35 @@ final class User {
 	}
 
 /**
+ * 更新
+ *     自身のプロパティを更新したいが readonly アクセス修飾子は一度初期化したら上書きできないため、
+ *	   新しいオブジェクトとして返す。 `private set` をサポートされたら書き換える。
+ *	   <https://www.php.net/manual/ja/language.oop5.properties.php>
+ *
+ * @param \App\Domain\Models\User\Type\Username $username username
+ * @param \App\Domain\Models\User\Type\Password $password password
+ * @param \App\Domain\Models\User\Type\RoleName $roleName roleName
+ * @param \App\Domain\Models\User\Type\Name $name name
+ * @return self
+ */
+	public function update(
+		Username $username,
+		Password $password,
+		RoleName $roleName,
+		Name $name
+	) : self {
+		return new self(
+			$this->__id,
+			$username,
+			$password,
+			$roleName,
+			$name,
+			$this->__created,
+			$this->__modified
+		);
+	}
+
+/**
  * isMyself
  *
  * @param \App\Domain\Models\User\User $other other

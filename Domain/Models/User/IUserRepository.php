@@ -62,6 +62,15 @@ interface IUserRepository {
 	public function save(User $user);
 
 /**
+ * 更新
+ *
+ * @param \App\Domain\Models\User\User $user user
+ * @return void
+ * @throws \InternalErrorException
+ */
+	public function update(User $user);
+
+/**
  * バリデーション
  *
  * @param \App\Domain\Models\User\User $user user
