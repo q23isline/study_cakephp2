@@ -145,6 +145,35 @@ final class User {
 	}
 
 /**
+ * 新規作成
+ *       UserId を引数からなくしたい
+ *
+ * @param \App\Domain\Models\User\Type\UserId $id id
+ * @param \App\Domain\Models\User\Type\Username $username username
+ * @param \App\Domain\Models\User\Type\Password $password password
+ * @param \App\Domain\Models\User\Type\RoleName $roleName roleName
+ * @param \App\Domain\Models\User\Type\Name $name name
+ * @return self
+ */
+	public static function create(
+		UserId $id,
+		Username $username,
+		Password $password,
+		RoleName $roleName,
+		Name $name
+	) : self {
+		return new self(
+			$id,
+			$username,
+			$password,
+			$roleName,
+			$name,
+			null,
+			null
+		);
+	}
+
+/**
  * 再構成
  *
  * @param \App\Domain\Models\User\Type\UserId $id id
@@ -174,5 +203,20 @@ final class User {
 			$created,
 			$modified
 		);
+	}
+
+/**
+ * isMyself
+ *
+ * @param \App\Domain\Models\User\User $other other
+ * @return bool
+ */
+	public function isMyself(User $other) : bool {
+		if ($this === $other) {
+			// 同じクラスの同じインスタンスであれば true
+			return true;
+		}
+
+		return $this->__id->getValue() === $other->getId()->getValue();
 	}
 }
