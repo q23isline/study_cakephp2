@@ -1,32 +1,26 @@
 <?php
 declare(strict_types = 1);
+use App\ApplicationService\Users\UserListApplicationService;
+use App\ApplicationService\Users\UserListCommand;
+use App\ApplicationService\Users\UserListResult;
+use App\Domain\Shared\Exception\ValidateException;
+use App\Infrastructure\CakePHP\Users\CakePHPUserRepository;
+
 App::uses('AppController', 'Controller');
 /**
  * ApiV1UsersGetListController
- *
- * @property User $User
  */
 class ApiV1UsersGetListController extends AppController {
 
 /**
- * This controller does not use a model
- *
- * @var string[]
+ * @var \App\Infrastructure\CakePHP\Users\CakePHPUserRepository
  */
-	public $uses = ['User'];
+	private $__userRepository;
 
 /**
- * @var array<string,string>
+ * @var \App\ApplicationService\Users\UserListApplicationService
  */
-	public const SORT_TO_COLUMN = [
-		'id' => 'id',
-		'username' => 'username',
-		'password' => 'password',
-		'roleName' => 'role_name',
-		'name' => 'name',
-		'created' => 'created',
-		'modified' => 'modified',
-	];
+	private $__userListApplicationService;
 
 /**
  * beforeFilter
@@ -38,6 +32,9 @@ class ApiV1UsersGetListController extends AppController {
 		$this->autoRender = false;
 		$this->autoLayout = false;
 		$this->response->type('json');
+
+		$this->__userRepository = new CakePHPUserRepository();
+		$this->__userListApplicationService = new UserListApplicationService($this->__userRepository);
 	}
 
 /**
@@ -50,130 +47,20 @@ class ApiV1UsersGetListController extends AppController {
 		$pageSize = (int)($this->request->query('pageSize') ?? 10);
 		$sort = $this->request->query('sort') ?? '+username';
 
-		if (!$this->__validateParamSort($sort)) {
-			$errors = [
-				[
-					'field' => 'sort',
-					'reason' => '不正なソートです。'
-				]
-			];
-			$result = $this->__createErrorResult('Bad Request', $errors);
+		$command = new UserListCommand($page, $pageSize, $sort);
+
+		try {
+			$serviceResult = $this->__userListApplicationService->handle($command);
+			$meta = $serviceResult[0];
+			$data = $serviceResult[1];
+			$result = new UserListResult($meta, $data);
+			$response = $result->format();
+			$this->response->body((string)json_encode($response));
+		} catch (ValidateException $e) {
+			$response = $e->format();
+
 			$this->response->statusCode(400);
-			$this->response->body((string)json_encode($result));
-
-			return;
+			$this->response->body((string)json_encode($response));
 		}
-
-		$count = (int)$this->User->find('count');
-		$users = $this->__findUsers($page, $pageSize, $sort);
-
-		$result = $this->__createIndexResult($count, $page, $pageSize, $users);
-
-		$this->response->body((string)json_encode($result));
-	}
-
-/**
- * sort のバリデーション
- *
- * @param string $sort ソート
- * @return bool
- */
-	private function __validateParamSort(string $sort) : bool {
-		$orderKey = substr($sort, 0, 1);
-		if (!in_array($orderKey, ['+', '-'], true)) {
-			return false;
-		}
-
-		$sortKey = substr($sort, 1);
-		if (!in_array($sortKey, array_keys(self::SORT_TO_COLUMN), true)) {
-			return false;
-		}
-
-		return true;
-	}
-
-/**
- * ユーザー一覧取得
- *
- * @param int $page ページ番号
- * @param int $pageSize ページサイズ
- * @param string $sort ソート
- * @return array<int,array<string,mixed>>
- */
-	private function __findUsers(int $page, int $pageSize, string $sort) : array {
-		$orderKey = substr($sort, 0, 1) === '+' ? 'ASC' : 'DESC';
-		$requestSortKey = substr($sort, 1);
-		$sortKey = $this->__toColumnName($requestSortKey);
-		$order = "{$sortKey} {$orderKey}";
-
-		$offset = ($page - 1) * $pageSize;
-		$users = $this->User->find('all', [
-			'limit' => $pageSize,
-			'offset' => $offset,
-			'order' => [$order],
-		]);
-
-		$result = [];
-		if (is_array($users)) {
-			foreach ($users as $user) {
-				$result[] = [
-					'id' => $user['User']['id'],
-					'username' => $user['User']['username'],
-					'password' => $user['User']['password'],
-					'roleName' => $user['User']['role_name'],
-					'name' => $user['User']['name'],
-					'created' => $user['User']['created'],
-					'modified' => $user['User']['modified'],
-				];
-			}
-		}
-
-		return $result;
-	}
-
-/**
- * テーブル定義のカラム名に変換する
- *
- * @param string $sortKey ソートキー
- * @return string
- */
-	private function __toColumnName(string $sortKey) : string {
-		return self::SORT_TO_COLUMN[$sortKey];
-	}
-
-/**
- * ユーザー一覧のレスポンス作成
- *
- * @param int $count カウント
- * @param int $page ページ
- * @param int $pageSize ページサイズ
- * @param array<int,array<string,mixed>> $users ユーザー一覧
- * @return array<string,mixed>
- */
-	private function __createIndexResult(int $count, int $page, int $pageSize, array $users) : array {
-		return [
-			'meta' => [
-				'totalCount' => $count,
-				'page' => $page,
-				'pageSize' => $pageSize,
-			],
-			'data' => $users,
-		];
-	}
-
-/**
- * エラーのレスポンス作成
- *
- * @param string $message エラーメッセージ
- * @param array<int,array<string,mixed>> $errors エラー一覧
- * @return array<string,array<string,mixed>>
- */
-	private function __createErrorResult(string $message, array $errors) : array {
-		return [
-			'error' => [
-				'message' => $message,
-				'errors' => $errors,
-			],
-		];
 	}
 }

@@ -12,6 +12,7 @@ use App\Domain\Models\User\Type\RoleName;
 use App\Domain\Models\User\Type\UserId;
 use App\Domain\Models\User\Type\Username;
 use App\Domain\Models\User\User;
+use App\Domain\Models\User\UserCollection;
 use ClassRegistry;
 use DateTimeImmutable;
 use NotFoundException;
@@ -20,6 +21,28 @@ use NotFoundException;
  * class CakePHPUserRepository
  */
 final class CakePHPUserRepository implements IUserRepository {
+
+/**
+ * @var array<string,string>
+ */
+	private const SORT_TO_COLUMN = [
+		'id' => 'id',
+		'username' => 'username',
+		'password' => 'password',
+		'roleName' => 'role_name',
+		'name' => 'name',
+		'created' => 'created',
+		'modified' => 'modified',
+	];
+
+/**
+ * {@inheritDoc}
+ */
+	public function count() : int {
+		/** @var \User $model */
+		$model = ClassRegistry::init('User');
+		return (int)$model->find('count');
+	}
 
 /**
  * {@inheritDoc}
@@ -42,6 +65,35 @@ final class CakePHPUserRepository implements IUserRepository {
 	}
 
 /**
+ * {@inheritDoc}
+ */
+	public function findAll(int $page, int $pageSize, string $sort) : UserCollection {
+		$orderKey = substr($sort, 0, 1) === '+' ? 'ASC' : 'DESC';
+		$requestSortKey = substr($sort, 1);
+		$sortKey = $this->__toColumnName($requestSortKey);
+		$order = "{$sortKey} {$orderKey}";
+
+		$offset = ($page - 1) * $pageSize;
+
+		/** @var \User $model */
+		$model = ClassRegistry::init('User');
+		$users = $model->find('all', [
+			'limit' => $pageSize,
+			'offset' => $offset,
+			'order' => [$order],
+		]);
+
+		$data = new UserCollection();
+		if (is_array($users)) {
+			foreach ($users as $user) {
+				$data->add($this->__buildEntity($user));
+			}
+		}
+
+		return $data;
+	}
+
+/**
  * エンティティビルド
  *
  * @param array<mixed> $record record
@@ -57,5 +109,15 @@ final class CakePHPUserRepository implements IUserRepository {
 			new Created(new DateTimeImmutable($record['User']['created'])),
 			new Modified(new DateTimeImmutable($record['User']['modified']))
 		);
+	}
+
+/**
+ * テーブル定義のカラム名に変換する
+ *
+ * @param string $sortKey ソートキー
+ * @return string
+ */
+	private function __toColumnName(string $sortKey) : string {
+		return self::SORT_TO_COLUMN[$sortKey];
 	}
 }
