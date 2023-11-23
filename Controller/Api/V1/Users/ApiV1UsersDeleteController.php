@@ -1,19 +1,27 @@
 <?php
 declare(strict_types = 1);
+
+use App\ApplicationService\Users\UserDeleteApplicationService;
+use App\ApplicationService\Users\UserDeleteCommand;
+use App\Domain\Shared\Exception\ExceptionItem;
+use App\Domain\Shared\Exception\NotFoundException;
+use App\Infrastructure\CakePHP\Users\CakePHPUserRepository;
+
 App::uses('AppController', 'Controller');
 /**
  * ApiV1UsersDeleteController
- *
- * @property User $User
  */
 class ApiV1UsersDeleteController extends AppController {
 
 /**
- * This controller does not use a model
- *
- * @var string[]
+ * @var \App\Infrastructure\CakePHP\Users\CakePHPUserRepository
  */
-	public $uses = ['User'];
+	private $__userRepository;
+
+/**
+ * @var \App\ApplicationService\Users\UserDeleteApplicationService
+ */
+	private $__userDeleteApplicationService;
 
 /**
  * beforeFilter
@@ -25,6 +33,9 @@ class ApiV1UsersDeleteController extends AppController {
 		$this->autoRender = false;
 		$this->autoLayout = false;
 		$this->response->type('json');
+
+		$this->__userRepository = new CakePHPUserRepository();
+		$this->__userDeleteApplicationService = new UserDeleteApplicationService($this->__userRepository);
 	}
 
 /**
@@ -35,10 +46,16 @@ class ApiV1UsersDeleteController extends AppController {
  * @throws NotFoundException
  */
 	public function invoke(string $id) : void {
-		if (!$this->User->exists($id)) {
-			throw new NotFoundException(__('Invalid user'));
-		}
+		$command = new UserDeleteCommand($id);
 
-		$this->User->delete($id);
+		try {
+			$this->__userDeleteApplicationService->handle($command);
+		} catch (\NotFoundException $e) {
+			$error = new NotFoundException([new ExceptionItem('userId', 'ユーザーは存在しません。')]);
+			$response = $error->format();
+
+			$this->response->statusCode(404);
+			$this->response->body((string)json_encode($response));
+		}
 	}
 }

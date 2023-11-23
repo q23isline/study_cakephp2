@@ -71,6 +71,15 @@ interface IUserRepository {
 	public function update(User $user);
 
 /**
+ * 削除
+ *
+ * @param \App\Domain\Models\User\Type\UserId $userId userId
+ * @return void
+ * @throws \NotFoundException
+ */
+	public function delete(UserId $userId);
+
+/**
  * バリデーション
  *
  * @param \App\Domain\Models\User\User $user user
