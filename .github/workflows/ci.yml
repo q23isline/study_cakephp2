@@ -35,7 +35,7 @@ jobs:
       run: Vendor/bin/phpcs --config-set installed_paths Vendor/cakephp/cakephp-codesniffer
 
     - name: Run PHP CodeSniffer
-      run: Vendor/bin/phpcs --standard=CakePHP -p Console/Command/ Console/Templates/ Controller/ Model/ View/
+      run: Vendor/bin/phpcs --standard=CakePHP -p Console/Command/ Console/Templates/ Controller/ Model/ View/ ApplicationService/ Domain/ Infrastructure/
 
   static-analysis:
     name: Static Analysis

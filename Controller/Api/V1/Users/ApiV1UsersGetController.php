@@ -1,19 +1,28 @@
 <?php
 declare(strict_types = 1);
+
+use App\ApplicationService\Users\UserGetApplicationService;
+use App\ApplicationService\Users\UserGetCommand;
+use App\ApplicationService\Users\UserGetResult;
+use App\Domain\Shared\Exception\ExceptionItem;
+use App\Domain\Shared\Exception\NotFoundException;
+use App\Infrastructure\CakePHP\Users\CakePHPUserRepository;
+
 App::uses('AppController', 'Controller');
 /**
  * ApiV1UsersGetController
- *
- * @property User $User
  */
 class ApiV1UsersGetController extends AppController {
 
 /**
- * This controller does not use a model
- *
- * @var string[]
+ * @var \App\Infrastructure\CakePHP\Users\CakePHPUserRepository
  */
-	public $uses = ['User'];
+	private $__userRepository;
+
+/**
+ * @var \App\ApplicationService\Users\UserGetApplicationService
+ */
+	private $__userGetApplicationService;
 
 /**
  * beforeFilter
@@ -25,6 +34,9 @@ class ApiV1UsersGetController extends AppController {
 		$this->autoRender = false;
 		$this->autoLayout = false;
 		$this->response->type('json');
+
+		$this->__userRepository = new CakePHPUserRepository();
+		$this->__userGetApplicationService = new UserGetApplicationService($this->__userRepository);
 	}
 
 /**
@@ -32,48 +44,23 @@ class ApiV1UsersGetController extends AppController {
  *
  * @param string $id ID
  * @return void
- * @throws NotFoundException
+ * @throws \NotFoundException
  */
 	public function invoke(string $id) : void {
-		if (!$this->User->exists($id)) {
-			throw new NotFoundException(__('Invalid user'));
+		$command = new UserGetCommand($id);
+
+		try {
+			$userData = $this->__userGetApplicationService->handle($command);
+			$result = new UserGetResult($userData);
+			$response = $result->format();
+
+			$this->response->body((string)json_encode($response));
+		} catch (\NotFoundException $e) {
+			$error = new NotFoundException([new ExceptionItem('userId', 'ユーザーは存在しません。')]);
+			$response = $error->format();
+
+			$this->response->statusCode(400);
+			$this->response->body((string)json_encode($response));
 		}
-
-		$user = $this->__findUserById($id);
-
-		$result = [
-			'data' => $user,
-		];
-
-		$this->response->body((string)json_encode($result));
-	}
-
-/**
- * ユーザー取得
- *
- * @param string $id ID
- * @return array<string,mixed>
- */
-	private function __findUserById(string $id) : array {
-		$user = $this->User->find('first', [
-			'conditions' => [
-				'User.' . $this->User->primaryKey => $id,
-			],
-		]);
-
-		$result = [];
-		if (is_array($user)) {
-			$result = [
-				'id' => $user['User']['id'],
-				'username' => $user['User']['username'],
-				'password' => $user['User']['password'],
-				'roleName' => $user['User']['role_name'],
-				'name' => $user['User']['name'],
-				'created' => $user['User']['created'],
-				'modified' => $user['User']['modified'],
-			];
-		}
-
-		return $result;
 	}
 }

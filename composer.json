@@ -13,5 +13,12 @@
         "cakephp/debug_kit": "^2.2.0",
         "cakephp/cakephp-codesniffer": "1.0.4",
         "phpstan/phpstan": "1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\ApplicationService\\": "ApplicationService/",
+            "App\\Domain\\": "Domain/",
+            "App\\Infrastructure\\": "Infrastructure/"
+        }
     }
 }
