@@ -60,7 +60,7 @@ class UserUpdateApplicationService {
 		);
 
 		if ($this->__userService->isExists($data)) {
-			throw new ValidateException([new ExceptionItem('username', 'メールアドレスは既に存在しています。')]);
+			throw new ValidateException([new ExceptionItem('username', 'username は既に存在しています。')]);
 		}
 
 		$this->__userRepository->update($data);

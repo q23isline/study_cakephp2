@@ -35,7 +35,7 @@ interface IUserRepository {
 	public function getById(UserId $userId);
 
 /**
- * メールアドレスで検索
+ * username で検索
  *
  * @param \App\Domain\Models\User\Type\Username $username username
  * @return \App\Domain\Models\User\User|null
