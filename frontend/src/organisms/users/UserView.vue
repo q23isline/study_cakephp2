@@ -60,8 +60,8 @@ export default class UserView extends Vue {
     this.user.data.password = user.data.password;
     this.user.data.roleName = user.data.roleName;
     this.user.data.name = user.data.name;
-    this.user.data.created = user.data.created;
-    this.user.data.modified = user.data.modified;
+    this.user.data.created = new Date(user.data.created);
+    this.user.data.modified = new Date(user.data.modified);
   }
 
   /**

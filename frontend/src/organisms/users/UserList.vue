@@ -258,8 +258,8 @@ export default class UserList extends Vue {
         password: user.password,
         roleName: user.roleName,
         name: user.name,
-        created: user.created,
-        modified: user.modified,
+        created: new Date(user.created),
+        modified: new Date(user.modified),
       };
     });
   }

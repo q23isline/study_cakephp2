@@ -4,6 +4,6 @@ export type UserApiDataResponse = {
   password: string;
   roleName: string;
   name: string;
-  created: Date;
-  modified: Date;
+  created: string;
+  modified: string;
 };

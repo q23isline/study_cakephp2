@@ -38,25 +38,13 @@ class UserApi {
       throw e;
     });
 
-    const users = res.data.data.map((user) => {
-      return {
-        id: user.id,
-        username: user.username,
-        password: user.password,
-        roleName: user.roleName,
-        name: user.name,
-        created: new Date(user.created),
-        modified: new Date(user.modified),
-      };
-    });
-
     return {
       meta: {
         page: res.data.meta.page,
         pageSize: res.data.meta.pageSize,
         totalCount: res.data.meta.totalCount,
       },
-      data: users,
+      data: res.data.data,
     };
   }
 
@@ -83,15 +71,7 @@ class UserApi {
     });
 
     return {
-      data: {
-        id: res.data.data.id,
-        username: res.data.data.username,
-        password: res.data.data.password,
-        roleName: res.data.data.roleName,
-        name: res.data.data.name,
-        created: new Date(res.data.data.created),
-        modified: new Date(res.data.data.modified),
-      },
+      data: res.data.data,
     };
   }
 
