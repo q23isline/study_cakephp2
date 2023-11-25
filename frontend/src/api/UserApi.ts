@@ -38,14 +38,7 @@ class UserApi {
       throw e;
     });
 
-    return {
-      meta: {
-        page: res.data.meta.page,
-        pageSize: res.data.meta.pageSize,
-        totalCount: res.data.meta.totalCount,
-      },
-      data: res.data.data,
-    };
+    return res.data;
   }
 
   /**
@@ -70,9 +63,7 @@ class UserApi {
       throw e;
     });
 
-    return {
-      data: res.data.data,
-    };
+    return res.data;
   }
 
   /**
