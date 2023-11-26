@@ -150,11 +150,9 @@ export default class UserForm extends Vue {
             this.errorMessages = {};
             await this.sleep(10);
 
-            console.log(e);
-
-            e.errors.forEach((apiError: { field: string; reason: string }) => {
-              this.$set(this.errorMessages, apiError.field, apiError.reason);
-            });
+            e.errors.forEach((apiError: { field: string; reason: string }) =>
+              this.$set(this.errorMessages, apiError.field, apiError.reason)
+            );
           }
         }
       }
@@ -188,9 +186,8 @@ export default class UserForm extends Vue {
   }
 
   private updateValidationResult(): void {
-    const callback: ValidateCallback = (isValid) => {
-      this.validationResult = isValid;
-    };
+    const callback: ValidateCallback = (isValid) =>
+      (this.validationResult = isValid);
 
     this.$refs.form.validate(callback);
   }
@@ -200,9 +197,7 @@ export default class UserForm extends Vue {
    * @param ms
    */
   private async sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => {
-      window.setTimeout(resolve, ms);
-    });
+    return new Promise((resolve) => window.setTimeout(resolve, ms));
   }
 }
 </script>
