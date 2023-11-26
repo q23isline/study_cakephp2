@@ -65,14 +65,14 @@ class ApiV1UsersAddController extends AppController {
 			return;
 		}
 
-		$command = new UserAddCommand(
-			$jsonData['username'] ?? null,
-			$jsonData['password'] ?? null,
-			$jsonData['roleName'] ?? null,
-			$jsonData['name'] ?? null
-		);
-
 		try {
+			$command = new UserAddCommand(
+				$jsonData['username'] ?? null,
+				$jsonData['password'] ?? null,
+				$jsonData['roleName'] ?? null,
+				$jsonData['name'] ?? null
+			);
+
 			$this->__userAddApplicationService->handle($command);
 		} catch (ValidateException $e) {
 			$response = $e->format();

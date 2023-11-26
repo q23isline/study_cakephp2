@@ -58,14 +58,15 @@ class ApiV1UsersUpdateController extends AppController {
 		// https://book.cakephp.org/2/ja/controllers/request-response.html#xml-json
 		$jsonData = $this->request->input('json_decode', true);
 
-		$command = new UserUpdateCommand(
-			$id,
-			$jsonData['username'] ?? null,
-			$jsonData['password'] ?? null,
-			$jsonData['roleName'] ?? null,
-			$jsonData['name'] ?? null
-		);
 		try {
+			$command = new UserUpdateCommand(
+				$id,
+				$jsonData['username'] ?? null,
+				$jsonData['password'] ?? null,
+				$jsonData['roleName'] ?? null,
+				$jsonData['name'] ?? null
+			);
+
 			$this->__userUpdateApplicationService->handle($command);
 		} catch (ValidateException $e) {
 			$response = $e->format();
