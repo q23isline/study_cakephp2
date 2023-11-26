@@ -1,3 +1,7 @@
+/**
+ * @type @type {import('eslint/lib/shared/types').ConfigData}
+ * @link https://eslint.org/docs/latest/use/configure/configuration-files
+ */
 module.exports = {
   root: true,
   env: {

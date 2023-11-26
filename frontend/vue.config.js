@@ -12,4 +12,12 @@ module.exports = {
   outputDir: "../webroot",
   // ビルド後にできるファイル名にハッシュ値つけない（バックエンドで固定値で呼びだせるようにする）
   filenameHashing: false,
+  // 開発時の API へのアクセス時に CORS エラーを回避する（ Docker コンテナ名を指定する）
+  devServer: {
+    proxy: {
+      "^/api": {
+        target: "http://web",
+      },
+    },
+  },
 };

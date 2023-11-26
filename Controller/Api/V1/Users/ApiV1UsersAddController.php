@@ -34,7 +34,24 @@ class ApiV1UsersAddController extends AppController {
  * @throws InternalErrorException
  */
 	public function invoke() : void {
-		$data = $this->request->data;
+		// リクエストボディは raw 想定
+		// raw だと $this->request->data; ではリクエストパラメータが取得できないため、 input() で取得する
+		// https://book.cakephp.org/2/ja/controllers/request-response.html#xml-json
+		$data = $this->request->input('json_decode', true);
+		if ($data === null) {
+			$errors = [
+				[
+					'field' => '',
+					'reason' => '不正なパラメータです。'
+				],
+			];
+			$result = $this->__createErrorResult('Bad Request', $errors);
+			$this->response->statusCode(400);
+			$this->response->body((string)json_encode($result));
+
+			return;
+		}
+
 		$saveData = $this->__convertToSaveData($data);
 		$this->User->create($saveData);
 		if (!$this->User->validates()) {
