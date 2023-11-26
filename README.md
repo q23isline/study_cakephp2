@@ -121,7 +121,7 @@ docker compose exec front npm run serve
 ## コーディング標準チェック単体実行
 
 ```bash
-docker exec -it app ./Vendor/bin/phpcs --standard=CakePHP -p Console/Command/ Console/Templates/ Controller/ Model/ View/
+docker exec -it app ./Vendor/bin/phpcs --standard=CakePHP -p Console/Command/ Console/Templates/ Controller/ Model/ View/ ApplicationService/ Domain/ Infrastructure/
 ```
 
 ## 静的分析チェック単体実行
