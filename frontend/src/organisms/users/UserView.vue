@@ -21,7 +21,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
-import DateUtil from "@/utils/DateUtil";
+import { DateUtil } from "@/utils/DateUtil";
 
 @Component
 export default class UserView extends Vue {

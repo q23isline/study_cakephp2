@@ -3,7 +3,7 @@ import { ErrorItem } from "@/exception/types/ErrorItem";
 /**
  * @link https://future-architect.github.io/typescript-guide/exception.html#id4
  */
-export default class ValidateError extends Error {
+export class ValidateError extends Error {
   message: string;
   errors: ErrorItem[];
 

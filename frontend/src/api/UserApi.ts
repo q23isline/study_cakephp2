@@ -9,7 +9,7 @@ import {
   UserApiListResponse,
   UserApiGetResponse,
 } from "@/models/types/UserApiResponse";
-import ValidateError from "@/exception/ValidateError";
+import { ValidateError } from "@/exception/ValidateError";
 
 class UserApi {
   /**

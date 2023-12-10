@@ -68,7 +68,7 @@ import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
 import { UserApiDataResponse } from "@/models/types/UserApiDataResponse";
 import { UserApiListParam } from "@/models/types/UserApiParam";
-import DateUtil from "@/utils/DateUtil";
+import { DateUtil } from "@/utils/DateUtil";
 
 @Component
 export default class UserList extends Vue {

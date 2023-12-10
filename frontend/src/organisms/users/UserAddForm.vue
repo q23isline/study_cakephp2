@@ -58,7 +58,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { ElForm, ValidateCallback } from "element-ui/types/form";
 import { ElNotification } from "element-ui/types/notification";
 import UserApi from "@/api/UserApi";
-import ValidateError from "@/exception/ValidateError";
+import { ValidateError } from "@/exception/ValidateError";
 
 @Component
 export default class UserForm extends Vue {
