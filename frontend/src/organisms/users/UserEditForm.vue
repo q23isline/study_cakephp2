@@ -176,6 +176,7 @@ export default class UserForm extends Vue {
   private async load(): Promise<void> {
     try {
       const user = await UserApi.get(this.userId);
+      // User クラスオブジェクトに詰めようとすると値があるのに必須バリデーションエラーメッセージが表示されるので詰めない
       this.user.username = user.data.username;
       this.user.password = user.data.password;
       this.user.roleName = user.data.roleName;

@@ -257,16 +257,16 @@ export default class UserList extends Vue {
     this.users.meta.page = users.meta.page;
     this.users.meta.pageSize = users.meta.pageSize;
     this.users.meta.totalCount = users.meta.totalCount;
-    this.users.data = users.data.map((user): User => {
-      return {
-        id: user.id,
-        username: user.username,
-        password: user.password,
-        roleName: user.roleName,
-        name: user.name,
-        created: new Date(user.created),
-        modified: new Date(user.modified),
-      };
+    this.users.data = users.data.map((user) => {
+      return new User(
+        user.id,
+        user.username,
+        user.password,
+        user.roleName,
+        user.name,
+        new Date(user.created),
+        new Date(user.modified)
+      );
     });
   }
 }

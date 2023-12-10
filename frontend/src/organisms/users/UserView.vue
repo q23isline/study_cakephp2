@@ -1,19 +1,19 @@
 <template>
   <dl>
     <dt>Id</dt>
-    <dd>{{ user.data.id }}</dd>
+    <dd>{{ user.id }}</dd>
     <dt>Username</dt>
-    <dd>{{ user.data.username }}</dd>
+    <dd>{{ user.username }}</dd>
     <dt>Password</dt>
-    <dd>{{ user.data.password }}</dd>
+    <dd>{{ user.password }}</dd>
     <dt>Role Name</dt>
-    <dd>{{ user.data.roleName }}</dd>
+    <dd>{{ user.roleName }}</dd>
     <dt>Name</dt>
-    <dd>{{ user.data.name }}</dd>
+    <dd>{{ user.name }}</dd>
     <dt>Created</dt>
-    <dd>{{ toDateTimeString(user.data.created) }}</dd>
+    <dd>{{ toDateTimeString(user.created) }}</dd>
     <dt>Modified</dt>
-    <dd>{{ toDateTimeString(user.data.modified) }}</dd>
+    <dd>{{ toDateTimeString(user.modified) }}</dd>
   </dl>
 </template>
 
@@ -27,20 +27,7 @@ import { DateUtil } from "@/utils/DateUtil";
 export default class UserView extends Vue {
   @Prop({ default: "" })
   userId!: string;
-
-  user: {
-    data: User;
-  } = {
-    data: {
-      id: "",
-      username: "",
-      password: "",
-      roleName: "",
-      name: "",
-      created: new Date(),
-      modified: new Date(),
-    },
-  };
+  user = new User("", "", "", "", "", new Date(), new Date());
 
   /**
    * yyyy/m/d HH:MM:SS 形式の文字列に変換する
@@ -62,13 +49,15 @@ export default class UserView extends Vue {
    */
   private async load(): Promise<void> {
     const user = await UserApi.get(this.userId);
-    this.user.data.id = user.data.id;
-    this.user.data.username = user.data.username;
-    this.user.data.password = user.data.password;
-    this.user.data.roleName = user.data.roleName;
-    this.user.data.name = user.data.name;
-    this.user.data.created = new Date(user.data.created);
-    this.user.data.modified = new Date(user.data.modified);
+    this.user = new User(
+      user.data.id,
+      user.data.username,
+      user.data.password,
+      user.data.roleName,
+      user.data.name,
+      new Date(user.data.created),
+      new Date(user.data.modified)
+    );
   }
 }
 </script>
