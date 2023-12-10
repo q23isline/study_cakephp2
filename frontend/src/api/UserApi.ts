@@ -1,22 +1,49 @@
 import { AxiosError } from "axios";
 import { AppApi } from "@/api/AppApi";
-import {
-  UserApiListParam,
-  UserApiSaveParam,
-  UserApiUpdateParam,
-} from "@/models/types/UserApiParam";
-import {
-  UserApiListResponse,
-  UserApiGetResponse,
-} from "@/models/types/UserApiResponse";
-import ValidateError from "@/exception/ValidateError";
+import { ListMetaResponse } from "@/models/types/ListMetaResponse";
+import { UserApiListParam } from "@/models/types/UserApiParam";
+import { ValidateError } from "@/exception/ValidateError";
+
+type UserApiSaveParam = {
+  username: string;
+  password: string;
+  roleName: string;
+  name: string;
+};
+
+type UserApiUpdateParam = {
+  id: string;
+  username: string;
+  password: string;
+  roleName: string;
+  name: string;
+};
+
+type UserApiListResponse = {
+  data: UserApiDataResponse[];
+  meta: ListMetaResponse;
+};
+
+type UserApiGetResponse = {
+  data: UserApiDataResponse;
+};
+
+type UserApiDataResponse = {
+  id: string;
+  username: string;
+  password: string;
+  roleName: string;
+  name: string;
+  created: string;
+  modified: string;
+};
 
 class UserApi {
   /**
    * ユーザー情報取得
    * @param params
    */
-  public async getList(params: UserApiListParam): Promise<UserApiListResponse> {
+  async getList(params: UserApiListParam): Promise<UserApiListResponse> {
     const res = await AppApi.get<UserApiListResponse>("/api/v1/users", {
       params: params,
     }).catch((e: AxiosError) => {
@@ -45,7 +72,7 @@ class UserApi {
    * ユーザー詳細取得
    * @param id
    */
-  public async get(id: string): Promise<UserApiGetResponse> {
+  async get(id: string): Promise<UserApiGetResponse> {
     const res = await AppApi.get<UserApiGetResponse>(
       `/api/v1/users/${id}`
     ).catch((e: AxiosError) => {
@@ -70,7 +97,7 @@ class UserApi {
    * ユーザー追加
    * @param param
    */
-  public async save(param: UserApiSaveParam): Promise<void> {
+  async save(param: UserApiSaveParam): Promise<void> {
     await AppApi.post(`/api/v1/users`, {
       username: param.username,
       password: param.password,
@@ -105,7 +132,7 @@ class UserApi {
    * ユーザー更新
    * @param param
    */
-  public async update(param: UserApiUpdateParam): Promise<void> {
+  async update(param: UserApiUpdateParam): Promise<void> {
     await AppApi.put(`/api/v1/users/${param.id}`, {
       username: param.username,
       password: param.password,
@@ -140,7 +167,7 @@ class UserApi {
    * ユーザー削除
    * @param id
    */
-  public async delete(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     await AppApi.delete(`/api/v1/users/${id}`).catch((e: AxiosError) => {
       if (e.response) {
         console.error(e.response.data);

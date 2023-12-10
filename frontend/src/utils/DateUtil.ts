@@ -1,4 +1,4 @@
-export default class DateUtil {
+export class DateUtil {
   /**
    * yyyy/m/d HH:MM:SS 形式の文字列に変換する
    * @param dateTime 日付

@@ -33,13 +33,13 @@ export default class UserPage extends Vue {
   @Prop({ default: "" })
   userId!: string;
 
-  public $notify!: ElNotification;
+  $notify!: ElNotification;
 
   /**
    *1行削除
    * @param id
    */
-  public async deleteView(id: string): Promise<void> {
+  async deleteView(id: string): Promise<void> {
     const isConfirmed = window.confirm(
       `Are you sure you want to delete # ${id}?`
     );

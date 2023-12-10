@@ -58,23 +58,23 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { ElForm, ValidateCallback } from "element-ui/types/form";
 import { ElNotification } from "element-ui/types/notification";
 import UserApi from "@/api/UserApi";
-import ValidateError from "@/exception/ValidateError";
+import { ValidateError } from "@/exception/ValidateError";
 
 @Component
 export default class UserForm extends Vue {
   @Prop({ default: "" })
   userId!: string;
 
-  public user = {
+  user = {
     username: "",
     password: "",
     roleName: "admin",
     name: "",
   };
 
-  public $refs!: { form: ElForm };
-  public $notify!: ElNotification;
-  public rules = {
+  $refs!: { form: ElForm };
+  $notify!: ElNotification;
+  rules = {
     username: [
       { required: true, message: "この項目は必須入力です。", trigger: "blur" },
       {
@@ -103,7 +103,7 @@ export default class UserForm extends Vue {
     ],
   };
 
-  public options = [
+  options = [
     {
       value: "admin",
       label: "Admin",
@@ -114,10 +114,10 @@ export default class UserForm extends Vue {
     },
   ];
 
-  public validationResult = false;
-  public errorMessages: { [key: string]: string } = {};
+  validationResult = false;
+  errorMessages: { [key: string]: string } = {};
 
-  public async onsubmit(): Promise<void> {
+  async onsubmit(): Promise<void> {
     await this.$refs.form.validate(async (valid: boolean) => {
       if (valid) {
         try {
@@ -160,11 +160,23 @@ export default class UserForm extends Vue {
   }
 
   /**
+   * 初期化
+   */
+  async mounted(): Promise<void> {
+    await this.load();
+  }
+
+  beforeUpdate(): void {
+    this.updateValidationResult();
+  }
+
+  /**
    * ユーザー情報読み込み
    */
   private async load(): Promise<void> {
     try {
       const user = await UserApi.get(this.userId);
+      // User クラスオブジェクトに詰めようとすると値があるのに必須バリデーションエラーメッセージが表示されるので詰めない
       this.user.username = user.data.username;
       this.user.password = user.data.password;
       this.user.roleName = user.data.roleName;
@@ -172,17 +184,6 @@ export default class UserForm extends Vue {
     } catch (error) {
       console.error(error);
     }
-  }
-
-  /**
-   * 初期化
-   */
-  private async mounted(): Promise<void> {
-    await this.load();
-  }
-
-  private beforeUpdate(): void {
-    this.updateValidationResult();
   }
 
   private updateValidationResult(): void {

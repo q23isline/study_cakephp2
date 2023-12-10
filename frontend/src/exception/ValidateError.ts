@@ -1,11 +1,14 @@
-import { ErrorItem } from "@/exception/types/ErrorItem";
+type ErrorItem = {
+  field: string;
+  reason: string;
+};
 
 /**
  * @link https://future-architect.github.io/typescript-guide/exception.html#id4
  */
-export default class ValidateError extends Error {
-  message: string;
-  errors: ErrorItem[];
+export class ValidateError extends Error {
+  message;
+  errors;
 
   constructor(message: string, errors: ErrorItem[], e?: string) {
     // Pass remaining arguments (including vendor specific ones) to parent constructor
