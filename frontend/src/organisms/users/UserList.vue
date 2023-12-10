@@ -242,6 +242,13 @@ export default class UserList extends Vue {
   }
 
   /**
+   * 初期化
+   */
+  async mounted(): Promise<void> {
+    await this.load();
+  }
+
+  /**
    * ユーザー情報読み込み
    */
   private async load(): Promise<void> {
@@ -261,13 +268,6 @@ export default class UserList extends Vue {
         modified: new Date(user.modified),
       };
     });
-  }
-
-  /**
-   * 初期化
-   */
-  private async mounted(): Promise<void> {
-    await this.load();
   }
 }
 </script>

@@ -160,6 +160,17 @@ export default class UserForm extends Vue {
   }
 
   /**
+   * 初期化
+   */
+  async mounted(): Promise<void> {
+    await this.load();
+  }
+
+  beforeUpdate(): void {
+    this.updateValidationResult();
+  }
+
+  /**
    * ユーザー情報読み込み
    */
   private async load(): Promise<void> {
@@ -172,17 +183,6 @@ export default class UserForm extends Vue {
     } catch (error) {
       console.error(error);
     }
-  }
-
-  /**
-   * 初期化
-   */
-  private async mounted(): Promise<void> {
-    await this.load();
-  }
-
-  private beforeUpdate(): void {
-    this.updateValidationResult();
   }
 
   private updateValidationResult(): void {

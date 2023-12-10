@@ -51,6 +51,13 @@ export default class UserView extends Vue {
   }
 
   /**
+   * 初期化
+   */
+  async mounted(): Promise<void> {
+    await this.load();
+  }
+
+  /**
    * ユーザー情報読み込み
    */
   private async load(): Promise<void> {
@@ -62,13 +69,6 @@ export default class UserView extends Vue {
     this.user.data.name = user.data.name;
     this.user.data.created = new Date(user.data.created);
     this.user.data.modified = new Date(user.data.modified);
-  }
-
-  /**
-   * 初期化
-   */
-  private async mounted(): Promise<void> {
-    await this.load();
   }
 }
 </script>

@@ -114,6 +114,10 @@ export default class UserForm extends Vue {
   validationResult = false;
   errorMessages: { [key: string]: string } = {};
 
+  beforeUpdate(): void {
+    this.updateValidationResult();
+  }
+
   async onsubmit(): Promise<void> {
     await this.$refs.form.validate(async (valid: boolean) => {
       if (valid) {
@@ -153,10 +157,6 @@ export default class UserForm extends Vue {
         }
       }
     });
-  }
-
-  private beforeUpdate(): void {
-    this.updateValidationResult();
   }
 
   private updateValidationResult(): void {
