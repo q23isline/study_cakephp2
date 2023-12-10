@@ -1,15 +1,42 @@
 import { AxiosError } from "axios";
 import { AppApi } from "@/api/AppApi";
-import {
-  UserApiListParam,
-  UserApiSaveParam,
-  UserApiUpdateParam,
-} from "@/models/types/UserApiParam";
-import {
-  UserApiListResponse,
-  UserApiGetResponse,
-} from "@/models/types/UserApiResponse";
+import { ListMetaResponse } from "@/models/types/ListMetaResponse";
+import { UserApiListParam } from "@/models/types/UserApiParam";
 import { ValidateError } from "@/exception/ValidateError";
+
+type UserApiSaveParam = {
+  username: string;
+  password: string;
+  roleName: string;
+  name: string;
+};
+
+type UserApiUpdateParam = {
+  id: string;
+  username: string;
+  password: string;
+  roleName: string;
+  name: string;
+};
+
+type UserApiListResponse = {
+  data: UserApiDataResponse[];
+  meta: ListMetaResponse;
+};
+
+type UserApiGetResponse = {
+  data: UserApiDataResponse;
+};
+
+type UserApiDataResponse = {
+  id: string;
+  username: string;
+  password: string;
+  roleName: string;
+  name: string;
+  created: string;
+  modified: string;
+};
 
 class UserApi {
   /**
