@@ -1,7 +1,7 @@
 export class UserApiListParam {
-  public page = 1;
-  public pageSize = 10;
-  public sort = "-username";
+  page = 1;
+  pageSize = 10;
+  sort = "-username";
 
   constructor(page: number, pageSize: number, sort: string) {
     this.page = page;

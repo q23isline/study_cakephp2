@@ -62,16 +62,16 @@ import ValidateError from "@/exception/ValidateError";
 
 @Component
 export default class UserForm extends Vue {
-  public user = {
+  user = {
     username: "",
     password: "",
     roleName: "admin",
     name: "",
   };
 
-  public $refs!: { form: ElForm };
-  public $notify!: ElNotification;
-  public rules = {
+  $refs!: { form: ElForm };
+  $notify!: ElNotification;
+  rules = {
     username: [
       { required: true, message: "この項目は必須入力です。", trigger: "blur" },
       {
@@ -100,7 +100,7 @@ export default class UserForm extends Vue {
     ],
   };
 
-  public options = [
+  options = [
     {
       value: "admin",
       label: "Admin",
@@ -111,10 +111,10 @@ export default class UserForm extends Vue {
     },
   ];
 
-  public validationResult = false;
-  public errorMessages: { [key: string]: string } = {};
+  validationResult = false;
+  errorMessages: { [key: string]: string } = {};
 
-  public async onsubmit(): Promise<void> {
+  async onsubmit(): Promise<void> {
     await this.$refs.form.validate(async (valid: boolean) => {
       if (valid) {
         try {

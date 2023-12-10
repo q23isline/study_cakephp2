@@ -28,7 +28,7 @@ export default class UserView extends Vue {
   @Prop({ default: "" })
   userId!: string;
 
-  public user: {
+  user: {
     data: User;
   } = {
     data: {
@@ -46,7 +46,7 @@ export default class UserView extends Vue {
    * yyyy/m/d HH:MM:SS 形式の文字列に変換する
    * @param dateTime 日付
    */
-  public toDateTimeString(dateTime: Date): string {
+  toDateTimeString(dateTime: Date): string {
     return DateUtil.toDateTimeString(dateTime);
   }
 
