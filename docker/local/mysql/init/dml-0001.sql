@@ -32,3 +32,9 @@ INSERT IGNORE INTO `users` VALUES
 (UUID(), 'author28', '$2a$10$9ZINRSZaIH9phktmAhxACeQETQreIYMYXoWiqSljMaa.jKzNuJsO6', 'author', 'ユーザー28', NOW(), NOW()),
 (UUID(), 'author29', '$2a$10$9ZINRSZaIH9phktmAhxACeQETQreIYMYXoWiqSljMaa.jKzNuJsO6', 'author', 'ユーザー29', NOW(), NOW())
 ;
+
+INSERT IGNORE INTO `menus` (`id`, `key`, `permission_type`, `role_name`, `created`, `modified`) VALUES
+(NULL, 'user', 'referable', 'admin', NOW(), NOW()),
+(NULL, 'user', 'editable', 'admin', NOW(), NOW()),
+(NULL, 'user', 'referable', 'author', NOW(), NOW())
+;
