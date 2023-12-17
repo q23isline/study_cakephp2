@@ -43,4 +43,36 @@ class AppController extends Controller {
 			),
 		),
 	);
+
+/**
+ * beforeFilter
+ *
+ * @return void
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->__getLoginUser();
+	}
+
+/**
+ * getLoginUser method
+ *
+ * @return void
+ */
+	private function __getLoginUser() : void {
+		$id = $this->Auth->user('id');
+		$this->set('loginUserId', $id);
+
+		/** @var User $model */
+		$model = ClassRegistry::init('User');
+		$options = ['conditions' => ['User.' . $model->primaryKey => $id]];
+		$user = $model->find('first', $options);
+
+		$userName = '';
+		if (is_array($user)) {
+			$userName = $user['User']['name'] ?? '';
+		}
+
+		$this->set('loginUserName', $userName);
+	}
 }

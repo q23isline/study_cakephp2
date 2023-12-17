@@ -1,0 +1,71 @@
+@charset "utf-8";
+
+#header {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background: #003d4c;
+  padding: 0px;
+  z-index: 999;
+}
+
+.header-inner {
+  max-width: 1200px;
+  height: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-logo {
+  display: block;
+}
+
+#header .header-inner h1 {
+  line-height: 20px;
+  background: #003d4c url('../img/cake.icon.png') no-repeat left;
+  color: #fff;
+  padding: 0 30px;
+}
+
+#header .header-inner h1 a {
+  color: #fff;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+#header .header-inner h1 a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.menu-icons {
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  margin: 0 16px;
+}
+
+.menu-icon:last-child {
+  margin-right: 0;
+}
+
+.setting-icon {
+  width: 33px;
+  height: 33px;
+}
+
+.profile-icon {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  background: #5c6bc0;
+  color: #c5cbe9;
+  border-radius: 50%;
+  text-align: center;
+}
