@@ -33,6 +33,10 @@ class UsersController extends AppController {
 	public function index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->Paginator->paginate());
+
+		$actions = $this->__getArrowActions($this->action);
+		$this->_authorize($actions);
+		$this->set('arrowActions', $actions);
 	}
 
 /**
@@ -48,6 +52,10 @@ class UsersController extends AppController {
 		}
 		$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
 		$this->set('user', $this->User->find('first', $options));
+
+		$actions = $this->__getArrowActions($this->action);
+		$this->_authorize($actions);
+		$this->set('arrowActions', $actions);
 	}
 
 /**
@@ -56,6 +64,8 @@ class UsersController extends AppController {
  * @return CakeResponse|null|void
  */
 	public function add() {
+		$actions = $this->__getArrowActions($this->action);
+		$this->_authorize($actions);
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
@@ -65,6 +75,8 @@ class UsersController extends AppController {
 				$this->Flash->error(__('The user could not be saved. Please, try again.'));
 			}
 		}
+
+		$this->set('arrowActions', $actions);
 	}
 
 /**
@@ -78,6 +90,10 @@ class UsersController extends AppController {
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
+
+		$actions = $this->__getArrowActions($this->action);
+		$this->_authorize($actions);
+
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->User->save($this->request->data)) {
 				$this->Flash->success(__('The user has been saved.'));
@@ -92,6 +108,8 @@ class UsersController extends AppController {
 				$this->request->data = $user;
 			}
 		}
+
+		$this->set('arrowActions', $actions);
 	}
 
 /**
@@ -106,6 +124,10 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		$this->request->allowMethod('post', 'delete');
+
+		$actions = $this->__getArrowActions($this->action);
+		$this->_authorize($actions);
+
 		if ($this->User->delete($id)) {
 			$this->Flash->success(__('The user has been deleted.'));
 		} else {
@@ -136,5 +158,62 @@ class UsersController extends AppController {
  */
 	public function logout() {
 		$this->redirect($this->Auth->logout());
+	}
+
+/**
+ * getArrowActions
+ *
+ * @param string $selfAction アクション名
+ * @return array<string>
+ */
+	private function __getArrowActions(string $selfAction) : array {
+		$arrowPermissionTypes = $this->_getArrowPermissionTypes('user');
+		$actions = [];
+		foreach ($arrowPermissionTypes as $type) {
+			if ($type === 'editable') {
+				switch ($selfAction) {
+					case 'index':
+						$actions[] = 'add';
+						$actions[] = 'delete';
+						break;
+					case 'view':
+						$actions[] = 'add';
+						$actions[] = 'edit';
+						$actions[] = 'delete';
+						break;
+					case 'add':
+						$actions[] = 'add';
+						break;
+					case 'edit':
+						$actions[] = 'edit';
+						$actions[] = 'delete';
+						break;
+					case 'delete':
+						$actions[] = 'delete';
+						break;
+				}
+			} elseif ($type === 'referable') {
+				switch ($selfAction) {
+					case 'index':
+						$actions[] = 'index';
+						$actions[] = 'view';
+						break;
+					case 'view':
+						$actions[] = 'index';
+						$actions[] = 'view';
+						break;
+					case 'add':
+						$actions[] = 'index';
+						$actions[] = 'view';
+						break;
+					case 'edit':
+						$actions[] = 'index';
+						$actions[] = 'view';
+						break;
+				}
+			}
+		}
+
+		return $actions;
 	}
 }
