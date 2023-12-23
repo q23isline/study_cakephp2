@@ -19,7 +19,8 @@
 	<ul>
 		<?php if (in_array('index', $arrowActions, true)) : ?>
 			<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?></li>
-		<?php elseif (in_array('delete', $arrowActions, true)) : ?>
+		<?php endif ?>
+		<?php if (in_array('delete', $arrowActions, true)) : ?>
 			<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('User.id')), array('confirm' => __('Are you sure you want to delete # %s?', $this->Form->value('User.id')))); ?></li>
 		<?php endif ?>
 	</ul>

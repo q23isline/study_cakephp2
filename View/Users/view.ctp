@@ -43,11 +43,14 @@
 	<ul>
 		<?php if (in_array('index', $arrowActions, true)) : ?>
 			<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?></li>
-		<?php elseif (in_array('edit', $arrowActions, true)) : ?>
+		<?php endif ?>
+		<?php if (in_array('edit', $arrowActions, true)) : ?>
 			<li><?php echo $this->Html->link(__('Edit User'), array('action' => 'edit', $user['User']['id'])); ?> </li>
-		<?php elseif (in_array('delete', $arrowActions, true)) : ?>
+		<?php endif ?>
+		<?php if (in_array('delete', $arrowActions, true)) : ?>
 			<li><?php echo $this->Form->postLink(__('Delete User'), array('action' => 'delete', $user['User']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $user['User']['id']))); ?> </li>
-		<?php elseif (in_array('add', $arrowActions, true)) : ?>
+		<?php endif ?>
+		<?php if (in_array('add', $arrowActions, true)) : ?>
 			<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?> </li>
 		<?php endif ?>
 	</ul>
