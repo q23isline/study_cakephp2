@@ -163,3 +163,26 @@ docker compose exec front npm run lint
     ]
 }
 ```
+
+## 本番環境設定でのアプリ立ち上げ
+
+```bash
+cd study_cakephp2
+cp docker/prod/php-fpm/core.php Config/core.php
+cp docker/prod/php-fpm/database.php Config/database.php
+cp docker/prod/php-fpm/email.php Config/email.php
+docker compose -f docker-compose-prod.yml build --no-cache
+docker compose -f docker-compose-prod.yml down -v
+sudo rm -rf Vendor
+docker create -it --name app study_cakephp2-app bash
+sudo docker cp app:/var/www/html/Vendor $(pwd)
+docker rm -f app
+sudo chmod -R 777 Vendor
+sudo rm -rf frontend/node_modules
+sudo rm -rf webroot/*
+docker create -it --name front study_cakephp2-front bash
+sudo docker cp front:/front/webroot $(pwd)
+docker rm -f front
+sudo chmod -R 777 webroot
+docker compose -f docker-compose-prod.yml up -d
+```
