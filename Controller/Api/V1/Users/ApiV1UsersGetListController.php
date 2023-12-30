@@ -3,7 +3,10 @@ declare(strict_types = 1);
 use App\ApplicationService\Users\UserListApplicationService;
 use App\ApplicationService\Users\UserListCommand;
 use App\ApplicationService\Users\UserListResult;
+use App\Domain\Services\PermissionService;
+use App\Domain\Shared\Exception\PermissionDeniedException;
 use App\Domain\Shared\Exception\ValidateException;
+use App\Infrastructure\CakePHP\Menus\CakePHPMenuRepository;
 use App\Infrastructure\CakePHP\Users\CakePHPUserRepository;
 
 App::uses('AppController', 'Controller');
@@ -34,7 +37,9 @@ class ApiV1UsersGetListController extends AppController {
 		$this->response->type('json');
 
 		$this->__userRepository = new CakePHPUserRepository();
-		$this->__userListApplicationService = new UserListApplicationService($this->__userRepository);
+		$menuRepository = new CakePHPMenuRepository();
+		$permissionService = new PermissionService($this->__userRepository, $menuRepository);
+		$this->__userListApplicationService = new UserListApplicationService($this->__userRepository, $permissionService);
 	}
 
 /**
@@ -60,6 +65,11 @@ class ApiV1UsersGetListController extends AppController {
 			$response = $e->format();
 
 			$this->response->statusCode(400);
+			$this->response->body((string)json_encode($response));
+		} catch (PermissionDeniedException $e) {
+			$response = $e->format();
+
+			$this->response->statusCode(403);
 			$this->response->body((string)json_encode($response));
 		}
 	}
