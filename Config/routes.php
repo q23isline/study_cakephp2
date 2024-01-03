@@ -18,6 +18,8 @@
 	Router::connect('/api/v1/users/:id', array('controller' => 'ApiV1UsersUpdate', 'action' => 'invoke', '[method]' => 'PUT'), array('pass' => array('id'), 'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'));
 	Router::connect('/api/v1/users/:id', array('controller' => 'ApiV1UsersDelete', 'action' => 'invoke', '[method]' => 'DELETE'), array('pass' => array('id'), 'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'));
 
+	Router::connect('/api/v1/myself', array('controller' => 'ApiV1MyselfGet', 'action' => 'invoke', '[method]' => 'GET'));
+
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
