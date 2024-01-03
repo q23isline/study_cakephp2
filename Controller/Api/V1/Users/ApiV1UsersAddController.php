@@ -3,9 +3,12 @@ declare(strict_types = 1);
 
 use App\ApplicationService\Users\UserAddApplicationService;
 use App\ApplicationService\Users\UserAddCommand;
+use App\Domain\Services\PermissionService;
 use App\Domain\Services\UserService;
 use App\Domain\Shared\Exception\ExceptionItem;
+use App\Domain\Shared\Exception\PermissionDeniedException;
 use App\Domain\Shared\Exception\ValidateException;
+use App\Infrastructure\CakePHP\Menus\CakePHPMenuRepository;
 use App\Infrastructure\CakePHP\Users\CakePHPUserRepository;
 
 App::uses('AppController', 'Controller');
@@ -42,7 +45,10 @@ class ApiV1UsersAddController extends AppController {
 
 		$this->__userRepository = new CakePHPUserRepository();
 		$this->__userService = new UserService($this->__userRepository);
-		$this->__userAddApplicationService = new UserAddApplicationService($this->__userRepository, $this->__userService);
+		$menuRepository = new CakePHPMenuRepository();
+		$permissionService = new PermissionService($this->__userRepository, $menuRepository);
+		$this->__userAddApplicationService =
+			new UserAddApplicationService($this->__userRepository, $this->__userService, $permissionService);
 	}
 
 /**
@@ -78,6 +84,11 @@ class ApiV1UsersAddController extends AppController {
 			$response = $e->format();
 
 			$this->response->statusCode(400);
+			$this->response->body((string)json_encode($response));
+		} catch (PermissionDeniedException $e) {
+			$response = $e->format();
+
+			$this->response->statusCode(403);
 			$this->response->body((string)json_encode($response));
 		}
 	}
