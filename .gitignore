@@ -48,6 +48,19 @@ Thumbs.db
 /logs/web/*
 !/logs/web/.gitkeep
 
+# 一時ファイル
+!/tmp/cache/
+/tmp/cache/*
+!/tmp/cache/models/
+/tmp/cache/models/*
+!/tmp/cache/models/.gitkeep
+!/tmp/cache/persistent/
+/tmp/cache/persistent/*
+!/tmp/cache/persistent/.gitkeep
+!/tmp/logs/
+/tmp/logs/*
+!/tmp/logs/.gitkeep
+
 # node
 /frontend/node_modules/*
 /webroot/*
