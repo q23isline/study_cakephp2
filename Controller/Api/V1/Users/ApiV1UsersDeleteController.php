@@ -3,8 +3,11 @@ declare(strict_types = 1);
 
 use App\ApplicationService\Users\UserDeleteApplicationService;
 use App\ApplicationService\Users\UserDeleteCommand;
+use App\Domain\Services\PermissionService;
 use App\Domain\Shared\Exception\ExceptionItem;
 use App\Domain\Shared\Exception\NotFoundException;
+use App\Domain\Shared\Exception\PermissionDeniedException;
+use App\Infrastructure\CakePHP\Menus\CakePHPMenuRepository;
 use App\Infrastructure\CakePHP\Users\CakePHPUserRepository;
 
 App::uses('AppController', 'Controller');
@@ -35,7 +38,10 @@ class ApiV1UsersDeleteController extends AppController {
 		$this->response->type('json');
 
 		$this->__userRepository = new CakePHPUserRepository();
-		$this->__userDeleteApplicationService = new UserDeleteApplicationService($this->__userRepository);
+		$menuRepository = new CakePHPMenuRepository();
+		$permissionService = new PermissionService($this->__userRepository, $menuRepository);
+		$this->__userDeleteApplicationService =
+			new UserDeleteApplicationService($this->__userRepository, $permissionService);
 	}
 
 /**
@@ -43,18 +49,16 @@ class ApiV1UsersDeleteController extends AppController {
  *
  * @param string $id ID
  * @return void
- * @throws NotFoundException
  */
 	public function invoke(string $id) : void {
 		$command = new UserDeleteCommand($id);
 
 		try {
 			$this->__userDeleteApplicationService->handle($command);
-		} catch (\NotFoundException $e) {
-			$error = new NotFoundException([new ExceptionItem('userId', 'ユーザーは存在しません。')]);
-			$response = $error->format();
+		} catch (PermissionDeniedException $e) {
+			$response = $e->format();
 
-			$this->response->statusCode(404);
+			$this->response->statusCode(403);
 			$this->response->body((string)json_encode($response));
 		}
 	}

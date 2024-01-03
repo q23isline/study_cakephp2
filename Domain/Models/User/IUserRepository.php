@@ -26,6 +26,14 @@ interface IUserRepository {
 	public function count();
 
 /**
+ * ログインユーザー取得
+ *
+ * @return \App\Domain\Models\User\User
+ * @throws \NotFoundException
+ */
+	public function getLoginUser();
+
+/**
  * IDで検索
  *
  * @param \App\Domain\Models\User\Type\UserId $userId userId

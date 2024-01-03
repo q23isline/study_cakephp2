@@ -15,6 +15,7 @@ use App\Domain\Models\User\User;
 use App\Domain\Models\User\UserCollection;
 use App\Domain\Shared\Exception\ExceptionItem;
 use App\Domain\Shared\Exception\ValidateException;
+use AuthComponent;
 use CakeText;
 use ClassRegistry;
 use DateTimeImmutable;
@@ -53,6 +54,28 @@ final class CakePHPUserRepository implements IUserRepository {
 		/** @var \User $model */
 		$model = ClassRegistry::init('User');
 		return (int)$model->find('count');
+	}
+
+/**
+ * {@inheritDoc}
+ * @throws \NotFoundException
+ */
+	public function getLoginUser() : User {
+		$userId = AuthComponent::user('id');
+
+		/** @var \User $model */
+		$model = ClassRegistry::init('User');
+		$record = $model->find('first', [
+			'conditions' => [
+				'id' => $userId,
+			],
+		]);
+
+		if (empty($record) || !is_array($record)) {
+			throw new NotFoundException(__('Invalid user'));
+		}
+
+		return $this->__buildEntity($record);
 	}
 
 /**

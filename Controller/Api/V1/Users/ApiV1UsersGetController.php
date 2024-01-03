@@ -4,8 +4,11 @@ declare(strict_types = 1);
 use App\ApplicationService\Users\UserGetApplicationService;
 use App\ApplicationService\Users\UserGetCommand;
 use App\ApplicationService\Users\UserGetResult;
+use App\Domain\Services\PermissionService;
 use App\Domain\Shared\Exception\ExceptionItem;
 use App\Domain\Shared\Exception\NotFoundException;
+use App\Domain\Shared\Exception\PermissionDeniedException;
+use App\Infrastructure\CakePHP\Menus\CakePHPMenuRepository;
 use App\Infrastructure\CakePHP\Users\CakePHPUserRepository;
 
 App::uses('AppController', 'Controller');
@@ -36,7 +39,9 @@ class ApiV1UsersGetController extends AppController {
 		$this->response->type('json');
 
 		$this->__userRepository = new CakePHPUserRepository();
-		$this->__userGetApplicationService = new UserGetApplicationService($this->__userRepository);
+		$menuRepository = new CakePHPMenuRepository();
+		$permissionService = new PermissionService($this->__userRepository, $menuRepository);
+		$this->__userGetApplicationService = new UserGetApplicationService($this->__userRepository, $permissionService);
 	}
 
 /**
@@ -44,7 +49,6 @@ class ApiV1UsersGetController extends AppController {
  *
  * @param string $id ID
  * @return void
- * @throws \NotFoundException
  */
 	public function invoke(string $id) : void {
 		$command = new UserGetCommand($id);
@@ -60,6 +64,11 @@ class ApiV1UsersGetController extends AppController {
 			$response = $error->format();
 
 			$this->response->statusCode(400);
+			$this->response->body((string)json_encode($response));
+		} catch (PermissionDeniedException $e) {
+			$response = $e->format();
+
+			$this->response->statusCode(403);
 			$this->response->body((string)json_encode($response));
 		}
 	}

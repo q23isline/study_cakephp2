@@ -5,6 +5,9 @@ namespace App\ApplicationService\Users;
 
 use App\Domain\Models\User\IUserRepository;
 use App\Domain\Models\User\Type\UserId;
+use App\Domain\Services\PermissionService;
+use App\Domain\Shared\Exception\ExceptionItem;
+use App\Domain\Shared\Exception\PermissionDeniedException;
 
 /**
  * class UserGetApplicationService
@@ -17,14 +20,22 @@ class UserGetApplicationService {
 	private $__userRepository;
 
 /**
+ * @var \App\Domain\Services\PermissionService
+ */
+	private $__permissionService;
+
+/**
  * constructor
  *
  * @param \App\Domain\Models\User\IUserRepository $userRepository userRepository
+ * @param \App\Domain\Services\PermissionService $permissionService permissionService
  */
 	public function __construct(
-		IUserRepository $userRepository
+		IUserRepository $userRepository,
+		PermissionService $permissionService
 	) {
 		$this->__userRepository = $userRepository;
+		$this->__permissionService = $permissionService;
 	}
 
 /**
@@ -32,8 +43,13 @@ class UserGetApplicationService {
  *
  * @param \App\ApplicationService\Users\UserGetCommand $command command
  * @return \App\ApplicationService\Users\UserData
+ * @throws \App\Domain\Shared\Exception\PermissionDeniedException
  */
 	public function handle(UserGetCommand $command) : UserData {
+		if (!$this->__permissionService->isAllowedSelf('view', 'user')) {
+			throw new PermissionDeniedException([new ExceptionItem('', '権限がありません。')]);
+		}
+
 		$id = new UserId($command->getUserId());
 		$data = $this->__userRepository->getById($id);
 

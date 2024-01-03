@@ -4,7 +4,9 @@ declare(strict_types = 1);
 namespace App\ApplicationService\Users;
 
 use App\Domain\Models\User\IUserRepository;
+use App\Domain\Services\PermissionService;
 use App\Domain\Shared\Exception\ExceptionItem;
+use App\Domain\Shared\Exception\PermissionDeniedException;
 use App\Domain\Shared\Exception\ValidateException;
 
 /**
@@ -16,6 +18,11 @@ class UserListApplicationService {
  * @var \App\Domain\Models\User\IUserRepository
  */
 	private $__userRepository;
+
+/**
+ * @var \App\Domain\Services\PermissionService
+ */
+	private $__permissionService;
 
 /**
  * @var array<string>
@@ -34,11 +41,14 @@ class UserListApplicationService {
  * constructor
  *
  * @param \App\Domain\Models\User\IUserRepository $userRepository userRepository
+ * @param \App\Domain\Services\PermissionService $permissionService permissionService
  */
 	public function __construct(
-		IUserRepository $userRepository
+		IUserRepository $userRepository,
+		PermissionService $permissionService
 	) {
 		$this->__userRepository = $userRepository;
+		$this->__permissionService = $permissionService;
 	}
 
 /**
@@ -46,11 +56,16 @@ class UserListApplicationService {
  *
  * @param \App\ApplicationService\Users\UserListCommand $command command
  * @return array{0:array<string,mixed>,1:array<\App\ApplicationService\Users\UserData>}
+ * @throws \App\Domain\Shared\Exception\PermissionDeniedException
  * @throws \App\Domain\Shared\Exception\ValidateException
  */
 	public function handle(UserListCommand $command) : array {
 		if (!$this->__validateParamSort($command->getSort())) {
 			throw new ValidateException([new ExceptionItem('sort', '不正なソートです。')]);
+		}
+
+		if (!$this->__permissionService->isAllowedSelf('list', 'user')) {
+			throw new PermissionDeniedException([new ExceptionItem('', '権限がありません。')]);
 		}
 
 		$count = $this->__userRepository->count();

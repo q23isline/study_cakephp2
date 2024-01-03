@@ -3,8 +3,11 @@ declare(strict_types = 1);
 
 use App\ApplicationService\Users\UserUpdateApplicationService;
 use App\ApplicationService\Users\UserUpdateCommand;
+use App\Domain\Services\PermissionService;
 use App\Domain\Services\UserService;
+use App\Domain\Shared\Exception\PermissionDeniedException;
 use App\Domain\Shared\Exception\ValidateException;
+use App\Infrastructure\CakePHP\Menus\CakePHPMenuRepository;
 use App\Infrastructure\CakePHP\Users\CakePHPUserRepository;
 
 App::uses('AppController', 'Controller');
@@ -41,7 +44,10 @@ class ApiV1UsersUpdateController extends AppController {
 
 		$this->__userRepository = new CakePHPUserRepository();
 		$this->__userService = new UserService($this->__userRepository);
-		$this->__userUpdateApplicationService = new UserUpdateApplicationService($this->__userRepository, $this->__userService);
+		$menuRepository = new CakePHPMenuRepository();
+		$permissionService = new PermissionService($this->__userRepository, $menuRepository);
+		$this->__userUpdateApplicationService =
+			new UserUpdateApplicationService($this->__userRepository, $this->__userService, $permissionService);
 	}
 
 /**
@@ -49,8 +55,6 @@ class ApiV1UsersUpdateController extends AppController {
  *
  * @param string $id ID
  * @return void
- * @throws \App\Domain\Shared\Exception\NotFoundException
- * @throws \App\Domain\Shared\Exception\ValidateException
  */
 	public function invoke(string $id) : void {
 		// PUT だと $this->request->data; ではリクエストパラメータが取得できないため、 input() で取得する
@@ -72,6 +76,11 @@ class ApiV1UsersUpdateController extends AppController {
 			$response = $e->format();
 
 			$this->response->statusCode(400);
+			$this->response->body((string)json_encode($response));
+		} catch (PermissionDeniedException $e) {
+			$response = $e->format();
+
+			$this->response->statusCode(403);
 			$this->response->body((string)json_encode($response));
 		}
 	}
