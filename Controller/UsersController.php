@@ -174,6 +174,7 @@ class UsersController extends AppController {
 				switch ($selfAction) {
 					case 'index':
 						$actions[] = 'add';
+						$actions[] = 'edit';
 						$actions[] = 'delete';
 						break;
 					case 'view':
