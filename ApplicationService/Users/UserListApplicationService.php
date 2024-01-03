@@ -41,7 +41,7 @@ class UserListApplicationService {
  * constructor
  *
  * @param \App\Domain\Models\User\IUserRepository $userRepository userRepository
- * @param \\App\Domain\Services\PermissionService $permissionService permissionService
+ * @param \App\Domain\Services\PermissionService $permissionService permissionService
  */
 	public function __construct(
 		IUserRepository $userRepository,
