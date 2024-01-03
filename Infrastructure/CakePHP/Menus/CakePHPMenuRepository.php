@@ -28,6 +28,10 @@ final class CakePHPMenuRepository implements IMenuRepository {
 			],
 		]);
 
+		if (is_int($records) || $records === null) {
+			return [];
+		}
+
 		return array_map(function (array $record) {
 			return $record['Menu']['permission_type'];
 		}, $records);

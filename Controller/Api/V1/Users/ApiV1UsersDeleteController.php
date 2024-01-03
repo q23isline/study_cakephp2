@@ -49,19 +49,12 @@ class ApiV1UsersDeleteController extends AppController {
  *
  * @param string $id ID
  * @return void
- * @throws NotFoundException
  */
 	public function invoke(string $id) : void {
 		$command = new UserDeleteCommand($id);
 
 		try {
 			$this->__userDeleteApplicationService->handle($command);
-		} catch (\NotFoundException $e) {
-			$error = new NotFoundException([new ExceptionItem('userId', 'ユーザーは存在しません。')]);
-			$response = $error->format();
-
-			$this->response->statusCode(404);
-			$this->response->body((string)json_encode($response));
 		} catch (PermissionDeniedException $e) {
 			$response = $e->format();
 

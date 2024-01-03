@@ -55,8 +55,6 @@ class ApiV1UsersUpdateController extends AppController {
  *
  * @param string $id ID
  * @return void
- * @throws \App\Domain\Shared\Exception\NotFoundException
- * @throws \App\Domain\Shared\Exception\ValidateException
  */
 	public function invoke(string $id) : void {
 		// PUT だと $this->request->data; ではリクエストパラメータが取得できないため、 input() で取得する

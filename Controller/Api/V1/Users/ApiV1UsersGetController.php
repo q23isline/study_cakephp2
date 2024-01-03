@@ -49,7 +49,6 @@ class ApiV1UsersGetController extends AppController {
  *
  * @param string $id ID
  * @return void
- * @throws \NotFoundException
  */
 	public function invoke(string $id) : void {
 		$command = new UserGetCommand($id);
