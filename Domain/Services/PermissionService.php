@@ -67,4 +67,28 @@ final class PermissionService {
 
 		return false;
 	}
+
+/**
+ * 許可するアクション
+ *
+ * @param string $key key
+ * @return array<string>
+ */
+	public function getAllowedActions(string $key) : array {
+		$selfUser = $this->__userRepository->getLoginUser();
+		$arrowPermissionTypes = $this->__menuRepository->getArrowPermissionTypes($selfUser->getRoleName(), $key);
+		$result = [];
+		foreach ($arrowPermissionTypes as $type) {
+			if ($type === 'editable') {
+				$result[] = 'add';
+				$result[] = 'edit';
+				$result[] = 'delete';
+			} elseif ($type === 'referable') {
+				$result[] = 'list';
+				$result[] = 'view';
+			}
+		}
+
+		return $result;
+	}
 }

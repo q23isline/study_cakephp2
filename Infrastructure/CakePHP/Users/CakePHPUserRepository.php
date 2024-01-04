@@ -21,6 +21,7 @@ use ClassRegistry;
 use DateTimeImmutable;
 use InternalErrorException;
 use NotFoundException;
+use UnauthorizedException;
 
 /**
  * class CakePHPUserRepository
@@ -59,9 +60,14 @@ final class CakePHPUserRepository implements IUserRepository {
 /**
  * {@inheritDoc}
  * @throws \NotFoundException
+ * @throws \UnauthorizedException
  */
 	public function getLoginUser() : User {
 		$userId = AuthComponent::user('id');
+
+		if (empty($userId)) {
+			throw new UnauthorizedException();
+		}
 
 		/** @var \User $model */
 		$model = ClassRegistry::init('User');

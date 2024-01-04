@@ -30,6 +30,7 @@ interface IUserRepository {
  *
  * @return \App\Domain\Models\User\User
  * @throws \NotFoundException
+ * @throws \UnauthorizedException
  */
 	public function getLoginUser();
 

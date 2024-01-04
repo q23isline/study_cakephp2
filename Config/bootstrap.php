@@ -53,6 +53,7 @@ App::build(array(
 		ROOT . DS . APP_DIR . DS . 'Controller' . DS,
 		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Api' . DS,
 		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Api' . DS . 'V1' . DS,
+		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Api' . DS . 'V1' . DS . 'Permissions' . DS,
 		ROOT . DS . APP_DIR . DS . 'Controller' . DS . 'Api' . DS . 'V1' . DS . 'Users' . DS,
 	),
 ));

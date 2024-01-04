@@ -20,6 +20,8 @@
 
 	Router::connect('/api/v1/myself', array('controller' => 'ApiV1MyselfGet', 'action' => 'invoke', '[method]' => 'GET'));
 
+	Router::connect('/api/v1/permissions/:functionKey', array('controller' => 'ApiV1PermissionsArrowGet', 'action' => 'invoke', '[method]' => 'GET'), array('pass' => array('functionKey')));
+
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',
  * its action called 'display', and we pass a param to select the view file
