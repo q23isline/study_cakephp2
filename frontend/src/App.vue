@@ -6,7 +6,7 @@
         <div id="nav">
           <router-link to="/">Home</router-link> |
           <router-link to="/about">About</router-link> |
-          <a href="/v1/users">Vue Users</a> |
+          <router-link to="/v1/users">Vue Users</router-link> |
           <a href="/users">CakePHP Users</a>
         </div>
         <router-view />
@@ -17,11 +17,8 @@
 </template>
 
 <style>
-#app {
-  text-align: center;
-}
-
 #nav {
+  text-align: center;
   padding: 30px;
 }
 

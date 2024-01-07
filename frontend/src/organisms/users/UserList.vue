@@ -1,23 +1,25 @@
 <template>
   <div>
-    <el-select v-model="sortSelect.value" @change="changeSort">
-      <el-option
-        v-for="item in sortSelect.options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-      </el-option>
-    </el-select>
-    <el-select v-model="pageSizeSelect.value" @change="changePageSize">
-      <el-option
-        v-for="item in pageSizeSelect.options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-      </el-option>
-    </el-select>
+    <div class="table-condition">
+      <el-select v-model="sortSelect.value" @change="changeSort">
+        <el-option
+          v-for="item in sortSelect.options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+      <el-select v-model="pageSizeSelect.value" @change="changePageSize">
+        <el-option
+          v-for="item in pageSizeSelect.options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
     <el-table :data="users.data" @row-click="redirectView">
       <el-table-column label="Id" prop="id"></el-table-column>
       <el-table-column label="Username" prop="username"></el-table-column>
@@ -47,7 +49,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div>
+    <div class="pagination">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -59,6 +61,15 @@
     </div>
   </div>
 </template>
+
+<style>
+.table-condition {
+  text-align: right;
+}
+.pagination {
+  text-align: center;
+}
+</style>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
