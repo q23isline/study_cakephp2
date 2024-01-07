@@ -183,6 +183,30 @@ class UserApi {
       throw e;
     });
   }
+
+  /**
+   * ログインユーザー取得
+   */
+  async getLoginUser(): Promise<UserApiGetResponse> {
+    const res = await AppApi.get<UserApiGetResponse>("/api/v1/myself").catch(
+      (e: AxiosError) => {
+        if (e.response) {
+          console.error(e.response.data);
+          console.error(e.response.status);
+          console.error(e.response.headers);
+        } else if (e.request) {
+          console.error(e.request);
+        } else {
+          console.error("Error", e.message);
+        }
+
+        console.error(e.config);
+        throw e;
+      }
+    );
+
+    return res.data;
+  }
 }
 
 export default new UserApi();
