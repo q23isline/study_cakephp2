@@ -1,25 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <a href="/v1/users">Vue Users</a> |
-      <a href="/users">CakePHP Users</a>
+    <div id="container">
+      <HeaderPage />
+      <div id="content">
+        <div id="nav">
+          <router-link to="/">Home</router-link> |
+          <router-link to="/about">About</router-link> |
+          <router-link to="/v1/users">Vue Users</router-link> |
+          <a href="/users">CakePHP Users</a>
+        </div>
+        <router-view />
+      </div>
+      <div id="footer"></div>
     </div>
-    <router-view />
   </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
 #nav {
+  text-align: center;
   padding: 30px;
 }
 
@@ -32,3 +31,15 @@
   color: #42b983;
 }
 </style>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import HeaderPage from "@/pages/shared/HeaderPage.vue";
+
+@Component({
+  components: {
+    HeaderPage,
+  },
+})
+export default class App extends Vue {}
+</script>

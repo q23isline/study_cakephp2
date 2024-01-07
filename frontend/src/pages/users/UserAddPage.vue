@@ -6,7 +6,7 @@
     <div class="actions">
       <h3>Actions</h3>
       <ul>
-        <li><a href="/v1/users">List Users</a></li>
+        <li><router-link to="/v1/users">List Users</router-link></li>
       </ul>
     </div>
   </div>

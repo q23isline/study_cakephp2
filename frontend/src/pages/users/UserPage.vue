@@ -11,8 +11,8 @@
           <router-link :to="`/v1/users/edit/${userId}`">Edit</router-link>
         </li>
         <li><a @click="deleteView(userId)">Delete</a></li>
-        <li><a href="/v1/users">List Users</a></li>
-        <li><a href="/v1/users/add">New User</a></li>
+        <li><router-link to="/v1/users">List Users</router-link></li>
+        <li><router-link to="/v1/users/add">New User</router-link></li>
       </ul>
     </div>
   </div>

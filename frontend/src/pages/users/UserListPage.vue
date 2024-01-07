@@ -7,7 +7,7 @@
     <div class="actions">
       <h3>Actions</h3>
       <ul>
-        <li><a href="/v1/users/add">New User</a></li>
+        <li><router-link to="/v1/users/add">New User</router-link></li>
       </ul>
     </div>
   </div>
