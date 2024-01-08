@@ -26,6 +26,18 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+
+	<style>
+	#nav {
+		text-align: center;
+		padding: 30px;
+	}
+
+	#nav a {
+		font-weight: bold;
+		color: #2c3e50;
+	}
+	</style>
 </head>
 <body>
 	<div id="container">
@@ -54,6 +66,12 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			</div>
 		</div>
 		<div id="content">
+			<div id="nav">
+				<a href="/" class="router-link-active">Home</a> |
+				<a href="/about" class="">About</a> |
+				<a href="/v1/users" class="router-link-exact-active router-link-active" aria-current="page">Vue Users</a> |
+				<a href="/users">CakePHP Users</a>
+			</div>
 
 			<?php echo $this->Session->flash(); ?>
 
