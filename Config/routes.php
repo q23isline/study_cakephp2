@@ -29,6 +29,7 @@
  */
 	Router::connect('/', array('controller' => 'pages', 'action' => 'index'));
 	Router::connect('/users', array('controller' => 'users', 'action' => 'index'));
+	Router::connect('/users/index/*', array('controller' => 'users', 'action' => 'index'));
 	Router::connect('/users/login', array('controller' => 'users', 'action' => 'login'));
 	Router::connect('/users/logout', array('controller' => 'users', 'action' => 'logout'));
 	Router::connect('/users/add', array('controller' => 'users', 'action' => 'add'));
