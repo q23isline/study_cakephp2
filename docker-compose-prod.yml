@@ -23,11 +23,37 @@ services:
       - backend
     depends_on:
       - app
+      - app2
+      - app3
   app:
     build:
       context: .
       dockerfile: ./docker/prod/php-fpm/Dockerfile
     container_name: app
+    volumes:
+      - ./:/var/www/html
+      - vendor-prod:/var/www/html/Vendor
+    networks:
+      - backend
+    depends_on:
+      - db
+  app2:
+    build:
+      context: .
+      dockerfile: ./docker/local/php-fpm/Dockerfile
+    container_name: app2
+    volumes:
+      - ./:/var/www/html
+      - vendor-prod:/var/www/html/Vendor
+    networks:
+      - backend
+    depends_on:
+      - db
+  app3:
+    build:
+      context: .
+      dockerfile: ./docker/local/php-fpm/Dockerfile
+    container_name: app3
     volumes:
       - ./:/var/www/html
       - vendor-prod:/var/www/html/Vendor
