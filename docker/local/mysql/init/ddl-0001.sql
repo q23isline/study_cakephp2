@@ -1,5 +1,12 @@
 SET NAMES utf8mb4;
 
+CREATE TABLE IF NOT EXISTS `cake_sessions` (
+    `id` varchar(255) NOT NULL,
+    `data` text,
+    `expires` int DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
 CREATE TABLE IF NOT EXISTS `users` (
     `id` CHAR(36) NOT NULL COMMENT 'ID',
     `username` VARCHAR(50) NOT NULL COMMENT 'ログインID',
