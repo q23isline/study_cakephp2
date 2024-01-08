@@ -36,13 +36,15 @@
           {{ toDateTimeString(scope.row.modified) }}
         </template>
       </el-table-column>
-      <el-table-column label="Actions">
+      <el-table-column v-if="isDisplayActionColumn()" label="Actions">
         <template v-slot="scope">
           <el-button
+            v-if="actions.includes('edit')"
             icon="el-icon-edit-outline"
             @click.stop="redirectEdit(scope.row.id)"
           ></el-button>
           <el-button
+            v-if="actions.includes('delete')"
             icon="el-icon-delete-solid"
             @click.stop="deleteRow(scope.row.id)"
           ></el-button>
@@ -74,7 +76,11 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { ElNotification } from "element-ui/types/notification";
+import { getModule } from "vuex-module-decorators";
 import { ListMetaResponse } from "@/models/types/ListMetaResponse";
+import { PermissionStore } from "@/store/types/PermissionStore";
+import PermissionModule from "@/store/modules/PermissionModule";
+import store from "@/store";
 import { User } from "@/models/User";
 import UserApi from "@/api/UserApi";
 import { UserApiListParam } from "@/models/types/UserApiParam";
@@ -179,12 +185,23 @@ export default class UserList extends Vue {
 
   $notify!: ElNotification;
 
+  actions: string[] = [];
+
+  private permissionModule = getModule(PermissionModule, store);
+
   /**
    * yyyy/m/d HH:MM:SS 形式の文字列に変換する
    * @param dateTime 日付
    */
   toDateTimeString(dateTime: Date): string {
     return DateUtil.toDateTimeString(dateTime);
+  }
+
+  /**
+   * Actions 列を表示するか
+   */
+  isDisplayActionColumn(): boolean {
+    return this.actions.includes("edit") || this.actions.includes("delete");
   }
 
   /**
@@ -257,6 +274,22 @@ export default class UserList extends Vue {
    */
   async mounted(): Promise<void> {
     await this.load();
+    await this.waitGetAllPermissions();
+  }
+
+  /**
+   * 権限を取得できるまで待つ
+   */
+  private async waitGetAllPermissions(): Promise<void> {
+    const timer = setInterval(async () => {
+      const permissions = await this.allPermissions();
+      if ("user" in permissions) {
+        this.actions = permissions["user"];
+        clearInterval(timer);
+
+        return "resolve";
+      }
+    }, 100);
   }
 
   /**
@@ -279,6 +312,13 @@ export default class UserList extends Vue {
         new Date(user.modified)
       );
     });
+  }
+
+  /**
+   * すべての権限を取得する
+   */
+  private allPermissions(): PermissionStore {
+    return this.permissionModule.getAllPermissions();
   }
 }
 </script>
