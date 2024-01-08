@@ -201,7 +201,7 @@ export default class UserList extends Vue {
    * Actions 列を表示するか
    */
   isDisplayActionColumn(): boolean {
-    return (this.actions.includes('edit') || this.actions.includes('delete'));
+    return this.actions.includes("edit") || this.actions.includes("delete");
   }
 
   /**
