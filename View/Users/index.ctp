@@ -76,18 +76,17 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<?php echo $this->Session->flash(); ?>
 
 			<div class="users index">
-				<h2><?php echo __('Users'); ?></h2>
+				<h2><?php echo __('ユーザー一覧'); ?></h2>
 				<table cellpadding="0" cellspacing="0">
 				<thead>
 				<tr>
-						<th><?php echo $this->Paginator->sort('id'); ?></th>
-						<th><?php echo $this->Paginator->sort('username'); ?></th>
-						<th><?php echo $this->Paginator->sort('password'); ?></th>
-						<th><?php echo $this->Paginator->sort('role_name'); ?></th>
-						<th><?php echo $this->Paginator->sort('name'); ?></th>
-						<th><?php echo $this->Paginator->sort('created'); ?></th>
-						<th><?php echo $this->Paginator->sort('modified'); ?></th>
-						<th class="actions"><?php echo __('Actions'); ?></th>
+						<th><?php echo $this->Paginator->sort('id', 'ID'); ?></th>
+						<th><?php echo $this->Paginator->sort('username', 'アカウント名'); ?></th>
+						<th><?php echo $this->Paginator->sort('role_name', '権限'); ?></th>
+						<th><?php echo $this->Paginator->sort('name', '氏名'); ?></th>
+						<th><?php echo $this->Paginator->sort('created', '作成日'); ?></th>
+						<th><?php echo $this->Paginator->sort('modified', '更新日'); ?></th>
+						<th class="actions"></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -95,20 +94,19 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 				<tr>
 					<td><?php echo h($user['User']['id']); ?>&nbsp;</td>
 					<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
-					<td><?php echo h($user['User']['password']); ?>&nbsp;</td>
 					<td><?php echo h($user['User']['role_name']); ?>&nbsp;</td>
 					<td><?php echo h($user['User']['name']); ?>&nbsp;</td>
 					<td><?php echo h($user['User']['created']); ?>&nbsp;</td>
 					<td><?php echo h($user['User']['modified']); ?>&nbsp;</td>
 					<td class="actions">
 						<?php if (in_array('view', $arrowActions, true)) : ?>
-							<?php echo $this->Html->link(__('View'), array('action' => 'view', $user['User']['id'])); ?>
+							<?php echo $this->Html->link(__('詳細'), array('action' => 'view', $user['User']['id'])); ?>
 						<?php endif ?>
 						<?php if (in_array('edit', $arrowActions, true)) : ?>
-							<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $user['User']['id'])); ?>
+							<?php echo $this->Html->link(__('編集'), array('action' => 'edit', $user['User']['id'])); ?>
 						<?php endif ?>
 						<?php if (in_array('delete', $arrowActions, true)) : ?>
-							<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $user['User']['id']), array('confirm' => __('Are you sure you want to delete # %s?', $user['User']['id']))); ?>
+							<?php echo $this->Form->postLink(__('削除'), array('action' => 'delete', $user['User']['id']), array('confirm' => __('削除してもよろしいですか？ ID: %s?', $user['User']['id']))); ?>
 						<?php endif ?>
 					</td>
 				</tr>
@@ -130,10 +128,10 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 				</div>
 			</div>
 			<div class="actions">
-				<h3><?php echo __('Actions'); ?></h3>
+				<h3><?php echo __('メニュー'); ?></h3>
 				<ul>
 					<?php if (in_array('add', $arrowActions, true)) : ?>
-						<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?></li>
+						<li><?php echo $this->Html->link(__('追加'), array('action' => 'add')); ?></li>
 					<?php endif ?>
 				</ul>
 			</div>

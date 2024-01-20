@@ -78,27 +78,28 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<div class="users form">
 			<?php echo $this->Form->create('User'); ?>
 				<fieldset>
-					<legend><?php echo __('Edit User'); ?></legend>
+					<legend><?php echo __('ユーザー編集'); ?></legend>
 				<?php
-					echo $this->Form->input('id');
-					echo $this->Form->input('username');
-					echo $this->Form->input('password');
+					echo $this->Form->input('id', ['label' => 'ID']);
+					echo $this->Form->input('username', ['label' => 'アカウント名']);
+					echo $this->Form->input('password', ['label' => 'パスワード']);
 					echo $this->Form->input('role_name', [
+						'label' => '権限',
 						'options' => array('admin' => 'Admin', 'author' => 'Author'),
 					]);
-					echo $this->Form->input('name');
+					echo $this->Form->input('name', ['label' => '氏名']);
 				?>
 				</fieldset>
-			<?php echo $this->Form->end(__('Submit')); ?>
+			<?php echo $this->Form->end(__('更新')); ?>
 			</div>
 			<div class="actions">
-				<h3><?php echo __('Actions'); ?></h3>
+				<h3><?php echo __('メニュー'); ?></h3>
 				<ul>
 					<?php if (in_array('index', $arrowActions, true)) : ?>
-						<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?></li>
+						<li><?php echo $this->Html->link(__('一覧'), array('action' => 'index')); ?></li>
 					<?php endif ?>
 					<?php if (in_array('delete', $arrowActions, true)) : ?>
-						<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('User.id')), array('confirm' => __('Are you sure you want to delete # %s?', $this->Form->value('User.id')))); ?></li>
+						<li><?php echo $this->Form->postLink(__('削除'), array('action' => 'delete', $this->Form->value('User.id')), array('confirm' => __('削除してもよろしいですか？ ID: %s?', $this->Form->value('User.id')))); ?></li>
 					<?php endif ?>
 				</ul>
 			</div>
