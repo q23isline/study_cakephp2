@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="user" :rules="rules">
+  <el-form ref="form" :model="user" :rules="rules" v-loading="loading">
     <fieldset>
       <legend>ユーザー追加</legend>
       <el-form-item
@@ -112,6 +112,7 @@ export default class UserForm extends Vue {
   ];
 
   validationResult = false;
+  loading = false;
   errorMessages: { [key: string]: string } = {};
 
   beforeUpdate(): void {
@@ -122,12 +123,14 @@ export default class UserForm extends Vue {
     await this.$refs.form.validate(async (valid: boolean) => {
       if (valid) {
         try {
+          this.loading = true;
           await UserApi.save({
             username: this.user.username,
             password: this.user.password,
             roleName: this.user.roleName,
             name: this.user.name,
           });
+          this.loading = false;
 
           this.$notify({
             title: "登録しました",
@@ -139,6 +142,7 @@ export default class UserForm extends Vue {
           this.$router.push("/v1/users");
         } catch (e) {
           if (e instanceof ValidateError) {
+            this.loading = false;
             this.$notify({
               title: "エラーがあります",
               message: "",
