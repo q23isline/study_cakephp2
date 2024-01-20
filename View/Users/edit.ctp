@@ -60,7 +60,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 							</svg>
 						</div>
 						<div class="menu-icon profile-icon"><?php echo mb_substr($loginUserName, 0, 1) ?></div>
-						<span><?php echo $loginUserName ?></span>
+						<span><?php echo $this->Html->link($loginUserName, "/users/view/{$loginUserId}"); ?></span>
 					</div>
 				<?php endif ?>
 			</div>
