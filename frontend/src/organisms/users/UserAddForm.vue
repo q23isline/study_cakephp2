@@ -1,9 +1,9 @@
 <template>
-  <el-form ref="form" :model="user" :rules="rules">
+  <el-form ref="form" :model="user" :rules="rules" v-loading="loading">
     <fieldset>
-      <legend>Add User</legend>
+      <legend>ユーザー追加</legend>
       <el-form-item
-        label="Username"
+        label="アカウント名"
         prop="username"
         :error="errorMessages.username"
       >
@@ -14,7 +14,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item
-        label="Password"
+        label="パスワード"
         prop="password"
         :error="errorMessages.password"
       >
@@ -27,7 +27,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item
-        label="Role Name"
+        label="権限"
         prop="roleName"
         :error="errorMessages.roleName"
       >
@@ -41,13 +41,13 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Name" prop="name" :error="errorMessages.name">
+      <el-form-item label="氏名" prop="name" :error="errorMessages.name">
         <el-input v-model="user.name" maxlength="50" id="name"></el-input>
       </el-form-item>
     </fieldset>
     <el-form-item>
       <el-button type="primary" @click="onsubmit" :disabled="!validationResult"
-        >Submit</el-button
+        >登録</el-button
       >
     </el-form-item>
   </el-form>
@@ -112,6 +112,7 @@ export default class UserForm extends Vue {
   ];
 
   validationResult = false;
+  loading = false;
   errorMessages: { [key: string]: string } = {};
 
   beforeUpdate(): void {
@@ -122,12 +123,14 @@ export default class UserForm extends Vue {
     await this.$refs.form.validate(async (valid: boolean) => {
       if (valid) {
         try {
+          this.loading = true;
           await UserApi.save({
             username: this.user.username,
             password: this.user.password,
             roleName: this.user.roleName,
             name: this.user.name,
           });
+          this.loading = false;
 
           this.$notify({
             title: "登録しました",
@@ -139,6 +142,7 @@ export default class UserForm extends Vue {
           this.$router.push("/v1/users");
         } catch (e) {
           if (e instanceof ValidateError) {
+            this.loading = false;
             this.$notify({
               title: "エラーがあります",
               message: "",

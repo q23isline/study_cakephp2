@@ -6,7 +6,7 @@
   top: 0;
   background: #003d4c;
   padding: 0px;
-  z-index: 999;
+  z-index: 5000;
 }
 
 .header-inner {
@@ -53,11 +53,6 @@
 
 .menu-icon:last-child {
   margin-right: 0;
-}
-
-.setting-icon {
-  width: 33px;
-  height: 33px;
 }
 
 .profile-icon {

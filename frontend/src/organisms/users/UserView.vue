@@ -1,18 +1,16 @@
 <template>
   <dl>
-    <dt>Id</dt>
+    <dt>ID</dt>
     <dd>{{ user.id }}</dd>
-    <dt>Username</dt>
+    <dt>アカウント名</dt>
     <dd>{{ user.username }}</dd>
-    <dt>Password</dt>
-    <dd>{{ user.password }}</dd>
-    <dt>Role Name</dt>
+    <dt>権限</dt>
     <dd>{{ user.roleName }}</dd>
-    <dt>Name</dt>
+    <dt>氏名</dt>
     <dd>{{ user.name }}</dd>
-    <dt>Created</dt>
+    <dt>作成日</dt>
     <dd>{{ toDateTimeString(user.created) }}</dd>
-    <dt>Modified</dt>
+    <dt>更新日</dt>
     <dd>{{ toDateTimeString(user.modified) }}</dd>
   </dl>
 </template>
@@ -27,7 +25,7 @@ import { DateUtil } from "@/utils/DateUtil";
 export default class UserView extends Vue {
   @Prop({ default: "" })
   userId!: string;
-  user = new User("", "", "", "", "", new Date(), new Date());
+  user = new User(this.userId, "-", "-", "-", "-", new Date(), new Date());
 
   /**
    * yyyy/m/d HH:MM:SS 形式の文字列に変換する
