@@ -82,7 +82,6 @@ interface IUserRepository {
  *
  * @param \App\Domain\Models\User\Type\UserId $userId userId
  * @return void
- * @throws \NotFoundException
  */
 	public function delete(UserId $userId);
 

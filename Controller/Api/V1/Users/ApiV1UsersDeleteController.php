@@ -4,8 +4,6 @@ declare(strict_types = 1);
 use App\ApplicationService\Users\UserDeleteApplicationService;
 use App\ApplicationService\Users\UserDeleteCommand;
 use App\Domain\Services\PermissionService;
-use App\Domain\Shared\Exception\ExceptionItem;
-use App\Domain\Shared\Exception\NotFoundException;
 use App\Domain\Shared\Exception\PermissionDeniedException;
 use App\Infrastructure\CakePHP\Menus\CakePHPMenuRepository;
 use App\Infrastructure\CakePHP\Users\CakePHPUserRepository;

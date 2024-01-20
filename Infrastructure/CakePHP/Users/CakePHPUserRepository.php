@@ -196,14 +196,10 @@ final class CakePHPUserRepository implements IUserRepository {
 
 /**
  * {@inheritDoc}
- * @throws \NotFoundException
  */
 	public function delete(UserId $userId) : void {
 		/** @var \User $model */
 		$model = ClassRegistry::init('User');
-		if (!$model->exists($userId->getValue())) {
-			throw new NotFoundException(__('Invalid user'));
-		}
 
 		$model->delete($userId->getValue());
 	}
