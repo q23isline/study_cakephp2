@@ -50,13 +50,13 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<?php echo $this->Form->create('User'); ?>
 				<fieldset>
 					<legend>
-						<?php echo __('Please enter your username and password'); ?>
+						<?php echo __('アカウント名とパスワードを入力してください'); ?>
 					</legend>
-					<?php echo $this->Form->input('username');
-					echo $this->Form->input('password');
+					<?php echo $this->Form->input('username', ['label' => 'アカウント名']);
+					echo $this->Form->input('password', ['label' => 'パスワード']);
 				?>
 				</fieldset>
-			<?php echo $this->Form->end(__('Login')); ?>
+			<?php echo $this->Form->end(__('ログイン')); ?>
 			</div>
 		</div>
 		<div id="footer">
