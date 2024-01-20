@@ -86,6 +86,21 @@ final class CakePHPUserRepository implements IUserRepository {
 
 /**
  * {@inheritDoc}
+ */
+	public function getLoginUserRoleName() : RoleName {
+		$roleName = AuthComponent::user('role_name');
+
+		if (!empty($roleName)) {
+			return new RoleName($roleName);
+		}
+
+		$user = $this->getLoginUser();
+
+		return $user->getRoleName();
+	}
+
+/**
+ * {@inheritDoc}
  * @throws \NotFoundException
  */
 	public function getById(UserId $userId) : User {

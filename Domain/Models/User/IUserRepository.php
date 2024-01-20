@@ -35,6 +35,13 @@ interface IUserRepository {
 	public function getLoginUser();
 
 /**
+ * ログインユーザーのロール名取得
+ *
+ * @return \App\Domain\Models\User\Type\RoleName
+ */
+	public function getLoginUserRoleName();
+
+/**
  * IDで検索
  *
  * @param \App\Domain\Models\User\Type\UserId $userId userId

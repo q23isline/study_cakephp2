@@ -43,8 +43,8 @@ final class PermissionService {
  * @return bool
  */
 	public function isAllowedSelf(string $action, string $key) : bool {
-		$selfUser = $this->__userRepository->getLoginUser();
-		$arrowPermissionTypes = $this->__menuRepository->getArrowPermissionTypes($selfUser->getRoleName(), $key);
+		$selfUserRoleName = $this->__userRepository->getLoginUserRoleName();
+		$arrowPermissionTypes = $this->__menuRepository->getArrowPermissionTypes($selfUserRoleName, $key);
 		foreach ($arrowPermissionTypes as $type) {
 			if ($type === 'editable') {
 				switch ($action) {
@@ -75,8 +75,8 @@ final class PermissionService {
  * @return array<string>
  */
 	public function getAllowedActions(string $key) : array {
-		$selfUser = $this->__userRepository->getLoginUser();
-		$arrowPermissionTypes = $this->__menuRepository->getArrowPermissionTypes($selfUser->getRoleName(), $key);
+		$selfUserRoleName = $this->__userRepository->getLoginUserRoleName();
+		$arrowPermissionTypes = $this->__menuRepository->getArrowPermissionTypes($selfUserRoleName, $key);
 		$result = [];
 		foreach ($arrowPermissionTypes as $type) {
 			if ($type === 'editable') {
