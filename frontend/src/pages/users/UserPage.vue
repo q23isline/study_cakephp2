@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="users view">
-      <h2>User</h2>
+      <h2>ユーザー詳細</h2>
       <UserView :user-id="userId" />
     </div>
     <ActionView functionKey="user" action="view" :user-id="userId" />

@@ -25,7 +25,7 @@ import UserApi from "@/api/UserApi";
 
 @Component
 export default class HeaderLoginUserView extends Vue {
-  user = new User("", "", "", "", "", new Date(), new Date());
+  user = new User("-", "-", "-", "-", "-", new Date(), new Date());
 
   /**
    * 初期化

@@ -1,37 +1,37 @@
 <template>
   <div class="actions">
-    <h3>Actions</h3>
+    <h3>メニュー</h3>
     <ul>
       <template v-if="action === 'add'">
         <li v-if="actions.includes('list')">
-          <router-link to="/v1/users">List</router-link>
+          <router-link to="/v1/users">一覧</router-link>
         </li>
       </template>
       <template v-else-if="action === 'edit'">
         <li v-if="actions.includes('delete')">
-          <a @click="deleteView(userId)">Delete</a>
+          <a @click="deleteView(userId)">削除</a>
         </li>
         <li v-if="actions.includes('list')">
-          <router-link to="/v1/users">List</router-link>
+          <router-link to="/v1/users">一覧</router-link>
         </li>
       </template>
       <template v-else-if="action === 'list'">
         <li v-if="actions.includes('add')">
-          <router-link to="/v1/users/add">New</router-link>
+          <router-link to="/v1/users/add">追加</router-link>
         </li>
       </template>
       <template v-else-if="action === 'view'">
         <li v-if="actions.includes('edit')">
-          <router-link :to="`/v1/users/edit/${userId}`">Edit</router-link>
+          <router-link :to="`/v1/users/edit/${userId}`">編集</router-link>
         </li>
         <li v-if="actions.includes('delete')">
-          <a @click="deleteView(userId)">Delete</a>
+          <a @click="deleteView(userId)">削除</a>
         </li>
         <li v-if="actions.includes('list')">
-          <router-link to="/v1/users">List</router-link>
+          <router-link to="/v1/users">一覧</router-link>
         </li>
         <li v-if="actions.includes('add')">
-          <router-link to="/v1/users/add">New</router-link>
+          <router-link to="/v1/users/add">追加</router-link>
         </li>
       </template>
     </ul>
@@ -70,9 +70,7 @@ export default class ActionView extends Vue {
    * @param id
    */
   async deleteView(id: string): Promise<void> {
-    const isConfirmed = window.confirm(
-      `Are you sure you want to delete # ${id}?`
-    );
+    const isConfirmed = window.confirm(`削除してもよろしいですか？ ID: ${id}?`);
     if (isConfirmed) {
       await UserApi.delete(id);
 

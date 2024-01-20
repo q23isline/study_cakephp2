@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="users index">
-      <h2>Users</h2>
+      <h2>ユーザー一覧</h2>
       <UserList />
     </div>
     <ActionView functionKey="user" action="list" />

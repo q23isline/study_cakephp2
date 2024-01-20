@@ -21,22 +21,21 @@
       </el-select>
     </div>
     <el-table :data="users.data" @row-click="redirectView">
-      <el-table-column label="Id" prop="id"></el-table-column>
-      <el-table-column label="Username" prop="username"></el-table-column>
-      <el-table-column label="Password" prop="password"></el-table-column>
-      <el-table-column label="Role" prop="roleName"></el-table-column>
-      <el-table-column label="Name" prop="name"></el-table-column>
-      <el-table-column label="Created" prop="created">
+      <el-table-column label="ID" prop="id"></el-table-column>
+      <el-table-column label="アカウント名" prop="username"></el-table-column>
+      <el-table-column label="権限" prop="roleName"></el-table-column>
+      <el-table-column label="氏名" prop="name"></el-table-column>
+      <el-table-column label="作成日" prop="created">
         <template v-slot="scope">
           {{ toDateTimeString(scope.row.created) }}
         </template>
       </el-table-column>
-      <el-table-column label="Modified" prop="modified">
+      <el-table-column label="更新日" prop="modified">
         <template v-slot="scope">
           {{ toDateTimeString(scope.row.modified) }}
         </template>
       </el-table-column>
-      <el-table-column v-if="isDisplayActionColumn()" label="Actions">
+      <el-table-column v-if="isDisplayActionColumn()">
         <template v-slot="scope">
           <el-button
             v-if="actions.includes('edit')"
@@ -95,59 +94,51 @@ export default class UserList extends Vue {
     options: [
       {
         value: "+id",
-        label: "Id 昇順",
+        label: "ID 昇順 ↑",
       },
       {
         value: "-id",
-        label: "Id 降順",
+        label: "ID 降順 ↓",
       },
       {
         value: "+username",
-        label: "Username 昇順",
+        label: "アカウント名 昇順 ↑",
       },
       {
         value: "-username",
-        label: "Username 降順",
-      },
-      {
-        value: "+password",
-        label: "Password 昇順",
-      },
-      {
-        value: "-password",
-        label: "Password 降順",
+        label: "アカウント名 降順 ↓",
       },
       {
         value: "+roleName",
-        label: "Role 昇順",
+        label: "権限 昇順 ↑",
       },
       {
         value: "-roleName",
-        label: "Role 降順",
+        label: "権限 降順 ↓",
       },
       {
         value: "+name",
-        label: "Name 昇順",
+        label: "氏名 昇順 ↑",
       },
       {
         value: "-name",
-        label: "Name 降順",
+        label: "氏名 降順 ↓",
       },
       {
         value: "+created",
-        label: "Created 昇順",
+        label: "作成日 昇順 ↑",
       },
       {
         value: "-created",
-        label: "Created 降順",
+        label: "作成日 降順 ↓",
       },
       {
         value: "+modified",
-        label: "Modified 昇順",
+        label: "更新日 昇順 ↑",
       },
       {
         value: "-modified",
-        label: "Modified 降順",
+        label: "更新日 降順 ↓",
       },
     ],
     value: "-username",
@@ -252,9 +243,7 @@ export default class UserList extends Vue {
    * @param id
    */
   async deleteRow(id: string): Promise<void> {
-    const isConfirmed = window.confirm(
-      `Are you sure you want to delete # ${id}?`
-    );
+    const isConfirmed = window.confirm(`削除してもよろしいですか？ ID: ${id}?`);
     if (isConfirmed) {
       await UserApi.delete(id);
 
