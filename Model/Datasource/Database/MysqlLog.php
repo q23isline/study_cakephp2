@@ -7,7 +7,7 @@ class MysqlLog extends Mysql {
  * Log given SQL query.
  *
  * @param string $sql — SQL statement
- * @param array $params — Values binded to the query (prepared statements)
+ * @param array<mixed> $params — Values binded to the query (prepared statements)
  * @return void
  */
 	public function logQuery($sql, $params = []) {
