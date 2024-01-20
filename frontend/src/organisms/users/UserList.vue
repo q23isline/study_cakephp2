@@ -20,7 +20,11 @@
         </el-option>
       </el-select>
     </div>
-    <el-table :data="users.data" @row-click="redirectView">
+    <el-table
+      :data="users.data"
+      @row-click="redirectView"
+      row-class-name="change-pointer"
+    >
       <el-table-column label="ID" prop="id"></el-table-column>
       <el-table-column label="アカウント名" prop="username"></el-table-column>
       <el-table-column label="権限" prop="roleName"></el-table-column>
