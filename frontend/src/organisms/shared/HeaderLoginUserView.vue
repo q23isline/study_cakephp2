@@ -14,7 +14,11 @@
       </svg>
     </div>
     <div class="menu-icon profile-icon">{{ user.name.slice(0, 1) }}</div>
-    <span>{{ user.name }}</span>
+    <span
+      ><router-link :to="`/v1/users/view/${user.id}`">{{
+        user.name
+      }}</router-link></span
+    >
   </div>
 </template>
 
