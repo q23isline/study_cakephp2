@@ -52,7 +52,7 @@
 class DATABASE_CONFIG {
 
 	public $default = array(
-		'datasource' => 'Database/Mysql',
+		'datasource' => 'Database/MysqlLog',
 		'persistent' => false,
 		'host' => 'db',
 		'login' => 'root',
