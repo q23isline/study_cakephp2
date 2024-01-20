@@ -21,6 +21,7 @@
       </el-select>
     </div>
     <el-table
+      v-loading="loading"
       :data="users.data"
       @row-click="redirectView"
       row-class-name="change-pointer"
@@ -182,6 +183,8 @@ export default class UserList extends Vue {
 
   actions: string[] = [];
 
+  loading = false;
+
   private permissionModule = getModule(PermissionModule, store);
 
   /**
@@ -249,7 +252,9 @@ export default class UserList extends Vue {
   async deleteRow(id: string): Promise<void> {
     const isConfirmed = window.confirm(`削除してもよろしいですか？ ID: ${id}?`);
     if (isConfirmed) {
+      this.loading = true;
       await UserApi.delete(id);
+      this.loading = false;
 
       this.$notify({
         title: "削除しました",
@@ -290,7 +295,9 @@ export default class UserList extends Vue {
    */
   private async load(): Promise<void> {
     const params = new UserApiListParam(this.page, this.pageSize, this.sort);
+    this.loading = true;
     const users = await UserApi.getList(params);
+    this.loading = false;
     this.users.meta.page = users.meta.page;
     this.users.meta.pageSize = users.meta.pageSize;
     this.users.meta.totalCount = users.meta.totalCount;
