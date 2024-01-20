@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace App\Domain\Models\User;
 
 use App\Domain\Models\User\Type\UserId;
-use App\Domain\Models\User\Type\Username;
 
 /**
  * interface IUserRepository
@@ -49,14 +48,6 @@ interface IUserRepository {
  * @throws \NotFoundException
  */
 	public function getById(UserId $userId);
-
-/**
- * username で検索
- *
- * @param \App\Domain\Models\User\Type\Username $username username
- * @return \App\Domain\Models\User\User|null
- */
-	public function findByUsername(Username $username);
 
 /**
  * すべて取得

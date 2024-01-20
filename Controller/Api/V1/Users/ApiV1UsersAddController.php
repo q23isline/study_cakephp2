@@ -4,7 +4,6 @@ declare(strict_types = 1);
 use App\ApplicationService\Users\UserAddApplicationService;
 use App\ApplicationService\Users\UserAddCommand;
 use App\Domain\Services\PermissionService;
-use App\Domain\Services\UserService;
 use App\Domain\Shared\Exception\ExceptionItem;
 use App\Domain\Shared\Exception\PermissionDeniedException;
 use App\Domain\Shared\Exception\ValidateException;
@@ -23,11 +22,6 @@ class ApiV1UsersAddController extends AppController {
 	private $__userRepository;
 
 /**
- * @var \App\Domain\Services\UserService
- */
-	private $__userService;
-
-/**
  * @var \App\ApplicationService\Users\UserAddApplicationService
  */
 	private $__userAddApplicationService;
@@ -44,11 +38,9 @@ class ApiV1UsersAddController extends AppController {
 		$this->response->type('json');
 
 		$this->__userRepository = new CakePHPUserRepository();
-		$this->__userService = new UserService($this->__userRepository);
 		$menuRepository = new CakePHPMenuRepository();
 		$permissionService = new PermissionService($this->__userRepository, $menuRepository);
-		$this->__userAddApplicationService =
-			new UserAddApplicationService($this->__userRepository, $this->__userService, $permissionService);
+		$this->__userAddApplicationService = new UserAddApplicationService($this->__userRepository, $permissionService);
 	}
 
 /**

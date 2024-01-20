@@ -122,25 +122,6 @@ final class CakePHPUserRepository implements IUserRepository {
 /**
  * {@inheritDoc}
  */
-	public function findByUsername(Username $username) : ?User {
-		/** @var \User $model */
-		$model = ClassRegistry::init('User');
-		$record = $model->find('first', [
-			'conditions' => [
-				'username' => $username->getValue(),
-			],
-		]);
-
-		if (empty($record) || !is_array($record)) {
-			return null;
-		}
-
-		return $this->__buildEntity($record);
-	}
-
-/**
- * {@inheritDoc}
- */
 	public function findAll(int $page, int $pageSize, string $sort) : UserCollection {
 		$orderKey = substr($sort, 0, 1) === '+' ? 'ASC' : 'DESC';
 		$requestSortKey = substr($sort, 1);
@@ -185,7 +166,7 @@ final class CakePHPUserRepository implements IUserRepository {
 		];
 
 		$model->create($saveData);
-		if (!$model->save()) {
+		if (!$model->save(null, false)) {
 			throw new InternalErrorException();
 		}
 	}
@@ -208,7 +189,7 @@ final class CakePHPUserRepository implements IUserRepository {
 		];
 
 		$model->set($saveData);
-		if (!$model->save()) {
+		if (!$model->save(null, false)) {
 			throw new InternalErrorException();
 		}
 	}
