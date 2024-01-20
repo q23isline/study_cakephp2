@@ -10,10 +10,8 @@ use App\Domain\Models\User\Type\RoleName;
 use App\Domain\Models\User\Type\UserId;
 use App\Domain\Models\User\Type\Username;
 use App\Domain\Services\PermissionService;
-use App\Domain\Services\UserService;
 use App\Domain\Shared\Exception\ExceptionItem;
 use App\Domain\Shared\Exception\PermissionDeniedException;
-use App\Domain\Shared\Exception\ValidateException;
 
 /**
  * class UserUpdateApplicationService
@@ -26,11 +24,6 @@ class UserUpdateApplicationService {
 	private $__userRepository;
 
 /**
- * @var \App\Domain\Services\UserService
- */
-	private $__userService;
-
-/**
  * @var \App\Domain\Services\PermissionService
  */
 	private $__permissionService;
@@ -39,16 +32,13 @@ class UserUpdateApplicationService {
  * constructor
  *
  * @param \App\Domain\Models\User\IUserRepository $userRepository userRepository
- * @param \App\Domain\Services\UserService $userService userService
  * @param \App\Domain\Services\PermissionService $permissionService permissionService
  */
 	public function __construct(
 		IUserRepository $userRepository,
-		UserService $userService,
 		PermissionService $permissionService
 	) {
 		$this->__userRepository = $userRepository;
-		$this->__userService = $userService;
 		$this->__permissionService = $permissionService;
 	}
 
@@ -58,7 +48,6 @@ class UserUpdateApplicationService {
  * @param \App\ApplicationService\Users\UserUpdateCommand $command command
  * @return void
  * @throws \App\Domain\Shared\Exception\PermissionDeniedException
- * @throws \App\Domain\Shared\Exception\ValidateException
  */
 	public function handle(UserUpdateCommand $command) : void {
 		if (!$this->__permissionService->isAllowedSelf('add', 'user')) {
@@ -74,9 +63,7 @@ class UserUpdateApplicationService {
 			new Name($command->getName())
 		);
 
-		if ($this->__userService->isExists($data)) {
-			throw new ValidateException([new ExceptionItem('username', 'username は既に存在しています。')]);
-		}
+		$this->__userRepository->validate($data);
 
 		$this->__userRepository->update($data);
 	}

@@ -4,7 +4,6 @@ declare(strict_types = 1);
 use App\ApplicationService\Users\UserUpdateApplicationService;
 use App\ApplicationService\Users\UserUpdateCommand;
 use App\Domain\Services\PermissionService;
-use App\Domain\Services\UserService;
 use App\Domain\Shared\Exception\PermissionDeniedException;
 use App\Domain\Shared\Exception\ValidateException;
 use App\Infrastructure\CakePHP\Menus\CakePHPMenuRepository;
@@ -20,11 +19,6 @@ class ApiV1UsersUpdateController extends AppController {
  * @var \App\Infrastructure\CakePHP\Users\CakePHPUserRepository
  */
 	private $__userRepository;
-
-/**
- * @var \App\Domain\Services\UserService
- */
-	private $__userService;
 
 /**
  * @var \App\ApplicationService\Users\UserUpdateApplicationService
@@ -43,11 +37,10 @@ class ApiV1UsersUpdateController extends AppController {
 		$this->response->type('json');
 
 		$this->__userRepository = new CakePHPUserRepository();
-		$this->__userService = new UserService($this->__userRepository);
 		$menuRepository = new CakePHPMenuRepository();
 		$permissionService = new PermissionService($this->__userRepository, $menuRepository);
 		$this->__userUpdateApplicationService =
-			new UserUpdateApplicationService($this->__userRepository, $this->__userService, $permissionService);
+			new UserUpdateApplicationService($this->__userRepository, $permissionService);
 	}
 
 /**

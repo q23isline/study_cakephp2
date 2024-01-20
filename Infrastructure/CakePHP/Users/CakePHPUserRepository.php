@@ -86,6 +86,21 @@ final class CakePHPUserRepository implements IUserRepository {
 
 /**
  * {@inheritDoc}
+ */
+	public function getLoginUserRoleName() : RoleName {
+		$roleName = AuthComponent::user('role_name');
+
+		if (!empty($roleName)) {
+			return new RoleName($roleName);
+		}
+
+		$user = $this->getLoginUser();
+
+		return $user->getRoleName();
+	}
+
+/**
+ * {@inheritDoc}
  * @throws \NotFoundException
  */
 	public function getById(UserId $userId) : User {
@@ -99,25 +114,6 @@ final class CakePHPUserRepository implements IUserRepository {
 
 		if (empty($record) || !is_array($record)) {
 			throw new NotFoundException(__('Invalid user'));
-		}
-
-		return $this->__buildEntity($record);
-	}
-
-/**
- * {@inheritDoc}
- */
-	public function findByUsername(Username $username) : ?User {
-		/** @var \User $model */
-		$model = ClassRegistry::init('User');
-		$record = $model->find('first', [
-			'conditions' => [
-				'username' => $username->getValue(),
-			],
-		]);
-
-		if (empty($record) || !is_array($record)) {
-			return null;
 		}
 
 		return $this->__buildEntity($record);
@@ -170,7 +166,7 @@ final class CakePHPUserRepository implements IUserRepository {
 		];
 
 		$model->create($saveData);
-		if (!$model->save()) {
+		if (!$model->save(null, false)) {
 			throw new InternalErrorException();
 		}
 	}
@@ -193,21 +189,17 @@ final class CakePHPUserRepository implements IUserRepository {
 		];
 
 		$model->set($saveData);
-		if (!$model->save()) {
+		if (!$model->save(null, false)) {
 			throw new InternalErrorException();
 		}
 	}
 
 /**
  * {@inheritDoc}
- * @throws \NotFoundException
  */
 	public function delete(UserId $userId) : void {
 		/** @var \User $model */
 		$model = ClassRegistry::init('User');
-		if (!$model->exists($userId->getValue())) {
-			throw new NotFoundException(__('Invalid user'));
-		}
 
 		$model->delete($userId->getValue());
 	}

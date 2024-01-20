@@ -1,12 +1,12 @@
 <?php
-App::uses('AppController', 'Controller');
+App::uses('AppScreenController', 'Controller');
 /**
  * Users Controller
  *
  * @property User $User
  * @property PaginatorComponent $Paginator
  */
-class UsersController extends AppController {
+class UsersController extends AppScreenController {
 
 /**
  * Components

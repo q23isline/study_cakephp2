@@ -9,7 +9,7 @@
  * @since         CakePHP(tm) v 0.2.9
  */
 
-App::uses('AppController', 'Controller');
+App::uses('AppScreenController', 'Controller');
 
 /**
  * Static content controller
@@ -19,7 +19,7 @@ App::uses('AppController', 'Controller');
  * @package       app.Controller
  * @link https://book.cakephp.org/2.0/en/controllers/pages-controller.html
  */
-class PagesController extends AppController {
+class PagesController extends AppScreenController {
 
 /**
  * This controller does not use a model
