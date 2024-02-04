@@ -1,0 +1,22 @@
+<phpunit bootstrap="Config/bootstrap.php">
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">ApplicationService/</directory>
+            <directory suffix=".php">Console/</directory>
+            <directory suffix=".php">Controller/</directory>
+            <directory suffix=".php">Domain/</directory>
+            <directory suffix=".php">Infrastructure/</directory>
+            <directory suffix=".php">Model/</directory>
+            <directory suffix=".php">View/</directory>
+            <exclude>
+                <file>Console/cake.php</file>
+                <file>Controller/PagesController.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+    <testsuites>
+        <testsuite name="app">
+            <directory>Test</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
