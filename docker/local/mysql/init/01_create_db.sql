@@ -1,0 +1,1 @@
+CREATE DATABASE IF NOT EXISTS test_study_cakephp2;
