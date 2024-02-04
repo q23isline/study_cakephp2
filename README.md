@@ -136,6 +136,18 @@ docker exec -it app ./Vendor/bin/phpstan analyse
 docker compose exec front npm run lint
 ```
 
+## ユニットテスト単体実行
+
+```bash
+# テスト実行
+docker exec -it --env XDEBUG_MODE=coverage app ./Console/cake test app AllTests
+# カバレッジ生成
+docker exec -it --env XDEBUG_MODE=coverage app ./Console/cake test app AllTests --coverage-html webroot/coverage
+```
+
+- カバレッジ確認URL
+  - <http://localhost/coverage/index.html>
+
 ## デバッグ実行
 
 ### VS Codeの初期設定
